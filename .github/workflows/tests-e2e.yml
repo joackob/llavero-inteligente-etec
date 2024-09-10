@@ -1,0 +1,26 @@
+name: Playwright Tests
+env:
+  DATABASE_URL: file:test.db
+  JWT_SECRET: jwt_secret
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  tests-e2e:
+    timeout-minutes: 2
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.1.9
+      - name: Install dependencies
+        run: bun install
+      - name: Install Playwright Browsers
+        run: bunx playwright install --with-deps
+      - name: Create a db to test
+        run: bun run init
+      - name: Run Playwright tests
+        run: bun run tests:e2e
