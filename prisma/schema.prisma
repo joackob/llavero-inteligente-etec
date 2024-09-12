@@ -17,5 +17,97 @@ model Users {
   name String 
   lastname String 
   email String @unique
-  password String 
+  password String @unique
+  devoluciones Devoluciones[]
+  prestamos Prestamos[]
+  transferencias Transferencias[]
 }
+
+
+model Llaves{
+  id String @id @default( uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  espacio String
+  ocupada Boolean @default(false)
+  delovoluciones Devoluciones[]
+  prestamos Prestamos[]
+
+}
+
+model Devoluciones{
+  id String @id @default( uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usuario Users @relation(fields:[userId], references:[id])
+  userId String
+  llave Llaves @relation(fields: [llaveId], references: [id])
+  llaveId String  
+}
+
+model Prestamos{
+  id String @id @default( uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usuario Users @relation(fields:[userId], references:[id])
+  userId String
+  llave Llaves @relation(fields: [llaveId], references: [id])
+  llaveId String
+}
+
+model Transferencias{
+  id String @id @default( uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  usuarioEmisor Users @relation(fields:[userIdEmisor], references:[id])
+  userIdEmisor String
+  usuarioReceptor Users @relation(fields:[userIdReceptor], references:[id])
+  userIdReceptor String
+  llave Llaves @relation(fields: [llaveId], references: [id])
+  llaveId String
+}
+
+
+// model Docentes{
+//   id String @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   name String 
+//   lastname String 
+//   email String @unique
+//   password String @unique
+//   registerAt DateTime @default(now())
+//   //date(registro de cuando saca la llave) hora y fecha ......
+//   //
+// }
+
+// model Limpieza{
+//   id String @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   name String 
+//   lastname String 
+//   email String @unique
+//   password String @unique
+// }
+
+// model Mantenimiento{
+//   id String @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   name String 
+//   lastname String 
+//   email String @unique
+//   password String @unique
+// }
+
+// model Seguridad{
+//   id String @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   name String 
+//   lastname String 
+//   email String @unique
+//   password String @unique
+// }
+
