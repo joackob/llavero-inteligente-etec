@@ -1,67 +1,68 @@
-"use client";
+import { useState } from 'react'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Label } from "@/components/ui/label"
+import { EyeIcon, EyeOffIcon } from "lucide-react"
 
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useForm } from "react-hook-form";
-import { SignInProps } from "../types";
+export default function SignIn() {
+  const [showPassword, setShowPassword] = useState(false)
 
-export type OnCompleteSignInFormProps = SignInProps;
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    
+    console.log('Iniciar sesión')
+  }
 
-export type OnCompleteSignInFormEvent = (
-  event: OnCompleteSignInFormProps,
-) => void;
-
-const SignInForm = ({
-  onCompleted,
-}: {
-  onCompleted: OnCompleteSignInFormEvent;
-}) => {
-  const { register, handleSubmit } = useForm<OnCompleteSignInFormProps>();
   return (
-    <Container maxWidth="xs">
-      <Stack marginTop={"20vh"} spacing={"24px"}>
-        <Typography
-          variant="h5"
-          sx={{
-            textTransform: "capitalize",
-            fontWeight: "bold",
-            color: "white",
-          }}
-        >
-          iniciar sesión
-        </Typography>
-        <Box component={"form"} onSubmit={handleSubmit(onCompleted)}>
-          <Stack spacing={"16px"}>
-            <TextField
-              type="email"
-              variant="outlined"
-              id="email-field"
-              placeholder="Email"
-              required
-              {...register("email", { required: true })}
-            />
-            <TextField
-              type="password"
-              variant="outlined"
-              id="password-field"
-              placeholder="Contraseña"
-              required
-              {...register("password", { required: true })}
-            />
-            <Button variant="contained" type={"submit"}>
-              continuar
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle>Iniciar Sesión</CardTitle>
+          <CardDescription>Ingresa tus credenciales para acceder al sistema de inventario de llaves.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit}>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="email">Correo electrónico</Label>
+                <Input id="email" type="email" placeholder="tu@ejemplo.com" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Contraseña</Label>
+                <div className="relative">
+                  <Input 
+                    id="password" 
+                    type={showPassword ? "text" : "password"} 
+                    placeholder="••••••••" 
+                    required 
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOffIcon className="h-4 w-4" /> : <EyeIcon className="h-4 w-4" />}
+                    <span className="sr-only">
+                      {showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                    </span>
+                  </Button>
+                </div>
+              </div>
+            </div>
+            <Button type="submit" className="w-full mt-6">
+              Continuar
             </Button>
-          </Stack>
-        </Box>
-      </Stack>
-    </Container>
-  );
-};
-
-export default SignInForm;
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-center">
+          <p className="text-sm text-gray-600">
+            ¿No tienes una cuenta? Contacta al administrador.
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
+  )
+}

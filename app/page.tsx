@@ -1,13 +1,11 @@
-import { Box, Container, Typography } from "@mui/material";
-
 export default function Home() {
   return (
-    <Box component={"main"} style={{ backgroundColor: "black" }}>
-      <Container maxWidth={"sm"}>
-        <Typography variant="h1" color={"white"}>
+    <div style={{ backgroundColor: "black" }}>
+      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <h1 style={{ color: "white", textAlign: "center" }}>
           Bienvenido!!!
-        </Typography>
-      </Container>
-    </Box>
+        </h1>
+      </div>
+    </div>
   );
 }

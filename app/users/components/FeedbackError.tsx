@@ -1,6 +1,3 @@
-import { Alert } from "@mui/material";
-import { ProcessStatus, Status } from "@/app/hooks/useProcessStatus";
-
 const FeedbackError = ({
   hasAProblem,
   problem,
@@ -8,7 +5,20 @@ const FeedbackError = ({
   hasAProblem: boolean;
   problem: string;
 }) => {
-  return hasAProblem && <Alert severity="error">{problem}</Alert>;
+  return (
+    hasAProblem && (
+      <div
+        style={{
+          backgroundColor: "red",
+          color: "white",
+          padding: "10px",
+          borderRadius: "5px",
+        }}
+      >
+        {problem}
+      </div>
+    )
+  );
 };
 
 export default FeedbackError;
