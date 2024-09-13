@@ -11,62 +11,62 @@ datasource db {
 }
 
 model Users {
-  id String @id @default(uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name String 
-  lastname String 
-  email String @unique
-  password String @unique
-  devoluciones Devoluciones[]
-  prestamos Prestamos[]
+  id                      String           @id @default(uuid())
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  name                    String
+  lastname                String
+  email                   String           @unique
+  password                String           @unique
+  activo                  Boolean
+  devoluciones            Devoluciones[]
+  prestamos               Prestamos[]
+  transferenciasEmitidas  Transferencias[] @relation("TransferenciasEmitidas")
+  transferenciasRecibidas Transferencias[] @relation("TransferenciasRecibidas")
+}
+
+model Llaves {
+  id             String           @id @default(uuid())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  espacio        String
+  ocupada        Boolean          @default(false)
+  delovoluciones Devoluciones[]
+  prestamos      Prestamos[]
   transferencias Transferencias[]
 }
 
-
-model Llaves{
-  id String @id @default( uuid())
+model Devoluciones {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  espacio String
-  ocupada Boolean @default(false)
-  delovoluciones Devoluciones[]
-  prestamos Prestamos[]
-
+  usuario   Users    @relation(fields: [usuarioId], references: [id])
+  usuarioId String
+  llave     Llaves   @relation(fields: [llaveId], references: [id])
+  llaveId   String
 }
 
-model Devoluciones{
-  id String @id @default( uuid())
+model Prestamos {
+  id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  usuario Users @relation(fields:[userId], references:[id])
-  userId String
-  llave Llaves @relation(fields: [llaveId], references: [id])
-  llaveId String  
+  usuario   Users    @relation(fields: [usuarioId], references: [id])
+  usuarioId String
+  llave     Llaves   @relation(fields: [llaveId], references: [id])
+  llaveId   String
 }
 
-model Prestamos{
-  id String @id @default( uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  usuario Users @relation(fields:[userId], references:[id])
-  userId String
-  llave Llaves @relation(fields: [llaveId], references: [id])
-  llaveId String
+model Transferencias {
+  id              String   @id @default(uuid())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  usuarioEmisor Users    @relation("TransferenciasEmitidas", fields: [usuarioEmisorId], references: [id])
+  usuarioEmisorId    String
+  usuarioReceptor Users    @relation("TransferenciasRecibidas", fields: [usuarioReceptorId], references: [id])
+  usuarioReceptorId  String
+  llave           Llaves   @relation(fields: [llaveId], references: [id])
+  llaveId         String
 }
-
-model Transferencias{
-  id String @id @default( uuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  usuarioEmisor Users @relation(fields:[userIdEmisor], references:[id])
-  userIdEmisor String
-  usuarioReceptor Users @relation(fields:[userIdReceptor], references:[id])
-  userIdReceptor String
-  llave Llaves @relation(fields: [llaveId], references: [id])
-  llaveId String
-}
-
 
 // model Docentes{
 //   id String @id @default(uuid())
@@ -110,4 +110,3 @@ model Transferencias{
 //   email String @unique
 //   password String @unique
 // }
-

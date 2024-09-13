@@ -19,7 +19,7 @@
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.16.0",
     "@mui/material": "^5.16.0",
-    "@prisma/client": "5.16.2",
+    "@prisma/client": "^5.19.1",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "jose": "^5.8.0",
@@ -40,7 +40,7 @@
     "@types/uuid": "^10.0.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
-    "prisma": "^5.16.2",
+    "prisma": "^5.19.1",
     "typescript": "^5"
   },
   "module": "index.ts",
