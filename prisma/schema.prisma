@@ -18,7 +18,7 @@ model Users {
   lastname                String
   email                   String           @unique
   password                String           @unique
-  activo                  Boolean
+  activo                  Boolean          @default(true)
   devoluciones            Devoluciones[]
   prestamos               Prestamos[]
   transferenciasEmitidas  Transferencias[] @relation("TransferenciasEmitidas")
@@ -57,15 +57,15 @@ model Prestamos {
 }
 
 model Transferencias {
-  id              String   @id @default(uuid())
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  usuarioEmisor Users    @relation("TransferenciasEmitidas", fields: [usuarioEmisorId], references: [id])
-  usuarioEmisorId    String
-  usuarioReceptor Users    @relation("TransferenciasRecibidas", fields: [usuarioReceptorId], references: [id])
-  usuarioReceptorId  String
-  llave           Llaves   @relation(fields: [llaveId], references: [id])
-  llaveId         String
+  id                String   @id @default(uuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  usuarioEmisor     Users    @relation("TransferenciasEmitidas", fields: [usuarioEmisorId], references: [id])
+  usuarioEmisorId   String
+  usuarioReceptor   Users    @relation("TransferenciasRecibidas", fields: [usuarioReceptorId], references: [id])
+  usuarioReceptorId String
+  llave             Llaves   @relation(fields: [llaveId], references: [id])
+  llaveId           String
 }
 
 // model Docentes{

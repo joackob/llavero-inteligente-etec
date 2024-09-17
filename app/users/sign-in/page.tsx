@@ -11,7 +11,7 @@ const Page = () => {
     <>
       <FeedbackInProgress isLoading={isLoading()} />
       <FeedbackError hasAProblem={isError()} problem={getInformation()} />
-      <SignInForm onCompleted={signIn} />;
+      <SignInForm />;
     </>
   );
 };

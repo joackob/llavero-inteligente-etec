@@ -5,20 +5,7 @@ const FeedbackError = ({
   hasAProblem: boolean;
   problem: string;
 }) => {
-  return (
-    hasAProblem && (
-      <div
-        style={{
-          backgroundColor: "red",
-          color: "white",
-          padding: "10px",
-          borderRadius: "5px",
-        }}
-      >
-        {problem}
-      </div>
-    )
-  );
+  return hasAProblem && <div>{problem}</div>;
 };
 
 export default FeedbackError;

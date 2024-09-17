@@ -1,3 +1,5 @@
+"use client";
+import Image from "next/image";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,41 +12,41 @@ const classrooms = [
     id: 1,
     name: "Aula 101",
     available: true,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
   {
     id: 2,
     name: "Aula 102",
     available: false,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
   {
     id: 3,
     name: "Aula 203",
     available: true,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
   {
     id: 4,
     name: "Aula 204",
     available: true,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
   {
     id: 5,
     name: "Aula 305",
     available: false,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
   {
     id: 6,
     name: "Aula 306",
     available: true,
-    image: "/placeholder.svg?height=200&width=300",
+    image: "https://picsum.photos/300/200",
   },
 ];
 
-export default function page() {
+export default function Page() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
@@ -61,6 +63,8 @@ export default function page() {
                 <AvatarImage
                   src="/placeholder.svg?height=32&width=32"
                   alt="@juanperez"
+                  width={32}
+                  height={32}
                 />
                 <AvatarFallback>
                   <User className="h-4 w-4" />
@@ -78,10 +82,13 @@ export default function page() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {classrooms.map((classroom) => (
             <Card key={classroom.id} className="overflow-hidden">
-              <img
+              <Image
                 src={classroom.image}
                 alt={`Imagen del ${classroom.name}`}
                 className="w-full h-40 object-cover"
+                width={300}
+                height={200}
+                priority
               />
               <CardHeader className="bg-gray-50 pb-4">
                 <CardTitle className="flex items-center justify-between">
