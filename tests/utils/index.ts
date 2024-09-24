@@ -4,7 +4,6 @@ import { Prisma } from "@prisma/client";
 
 export const initDB = async () => {
   try {
-    await db.users.deleteMany({});
     await db.users.create({
       data: {
         email: "jdoe@test.com",
@@ -22,7 +21,7 @@ export const initDB = async () => {
 
 export const cleanDB = async () => {
   try {
-    await db.users.deleteMany({});
+    await db.users.deleteMany();
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error.message);

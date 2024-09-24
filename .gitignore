@@ -42,6 +42,8 @@ bun.lockb
 # playwright
 /test-results
 /playwright-report
+/migrations
 
-db
+# db-test
 test.db
+test.db-journal

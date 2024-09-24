@@ -1,4 +1,4 @@
-import { cleanDB, initDB } from "@/app/tests/utils";
+import { cleanDB, initDB } from "@/tests/utils";
 import { test, expect, beforeAll, afterAll } from "bun:test";
 import { authenticate } from "../authenticate";
 import { UnauthorizedError } from "../../errors";
@@ -14,6 +14,6 @@ afterAll(async () => {
 test("Dada una contraseña invalida, se espera la excepción UnauthorizeError ", async () => {
   expect(
     async () =>
-      await authenticate({ email: "jdoe@test.com", password: "invalid" }),
+      await authenticate({ email: "jdoe@test.com", password: "invalid" })
   ).toThrowError(UnauthorizedError);
 });
