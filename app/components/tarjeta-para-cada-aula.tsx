@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Key, Lock } from "lucide-react";
+import { MessageCircle, Mail, Key } from "lucide-react";
 import Image from "next/image";
 
 const TarjetaParaCadaAula = ({
@@ -41,21 +41,16 @@ const TarjetaParaCadaAula = ({
           )}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex row justify-stretch space-x-4">
         {reservado ? (
           <>
-            <p className="text-center text-sm text-gray-600">
-              Si querés, podés: <span className="font-bold">llamarle</span> o{" "}
-              <span className="font-bold">enviarle un mensaje</span>
-            </p>
-            <p className="text-center text-sm text-gray-600">
-              Pero para eso, necesitas{" "}
-              <span className="font-bold">inciar sesión</span>
-            </p>
+            <Button className="w-full bg-gray-400" disabled={!reservado}>
+              Mandale un mensajito <MessageCircle className="h-4 w-4 ml-2" />
+            </Button>
           </>
         ) : (
           <Button className="w-full" disabled={reservado}>
-            Solicitar Llave
+            Solicitar Llave <Key className="h-4 w-4 ml-2" />
           </Button>
         )}
       </CardContent>
