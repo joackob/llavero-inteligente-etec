@@ -1,16 +1,8 @@
-"use client";
-
-import FeedbackError from "../components/FeedbackError";
-import FeedbackInProgress from "../components/FeedbackInProgress";
-import SignInForm from "./components/SignInForm";
-import { useSignInProcess } from "./hooks";
+import SignInForm from "./components/sign-in-form";
 
 const Page = () => {
-  const { isError, isLoading, getInformation, signIn } = useSignInProcess();
   return (
     <>
-      <FeedbackInProgress isLoading={isLoading()} />
-      <FeedbackError hasAProblem={isError()} problem={getInformation()} />
       <SignInForm />;
     </>
   );

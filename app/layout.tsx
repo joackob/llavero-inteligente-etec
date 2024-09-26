@@ -1,3 +1,6 @@
+import { ReactNode } from "react";
+import Header from "./components/header";
+import Main from "./components/main";
 import type { Metadata } from "next";
 import "./global.css";
 
@@ -9,11 +12,20 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body>{children}</body>
-    </html>
+    <Contenedor>
+      <Header />
+      <Main>{children}</Main>
+    </Contenedor>
   );
 }
+
+const Contenedor = ({ children }: Readonly<{ children: ReactNode }>) => {
+  return (
+    <html lang="es">
+      <body className="min-h-screen bg-gray-100">{children}</body>
+    </html>
+  );
+};

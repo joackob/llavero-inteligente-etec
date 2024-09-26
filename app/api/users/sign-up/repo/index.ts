@@ -12,8 +12,8 @@ export const create = async (props: SignUpUserProps): Promise<User> => {
     props.password = await bcrypt.hash(props.password, 10);
     const user = await db.users.create({
       data: {
-        name: props.name,
-        lastname: props.lastname,
+        nombre: props.name,
+        apellido: props.lastname,
         email: props.email,
         password: props.password,
       },

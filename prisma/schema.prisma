@@ -14,8 +14,8 @@ model Users {
   id                      String           @id @default(uuid())
   createdAt               DateTime         @default(now())
   updatedAt               DateTime         @updatedAt
-  name                    String
-  lastname                String
+  nombre                  String
+  apellido                String
   email                   String           @unique
   password                String           @unique
   activo                  Boolean          @default(true)

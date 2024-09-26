@@ -4,7 +4,7 @@ type User = Users;
 
 export const reply = (user: User): Response => {
   return Response.json(
-    { name: user.name, lastname: user.lastname, email: user.email },
-    { status: 201 },
+    { name: user.nombre, lastname: user.apellido, email: user.email },
+    { status: 201 }
   );
 };

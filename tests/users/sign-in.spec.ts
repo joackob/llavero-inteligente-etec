@@ -33,4 +33,31 @@ test.describe("Como usuario, quiero iniciar mi sesión en el sistema para poder 
     await expect(page.getByPlaceholder("••••••••")).toBeVisible();
     await expect(page.getByRole("button", { name: "Continuar" })).toBeVisible();
   });
+
+  test.skip("Si la contraseña y el usuario son correctos, la página debe ser redirigida al inicio con un banner con el nombre y apellido del usuario correspondiente", async ({
+    page,
+  }) => {
+    await page.goto("/users/sign-in");
+    await page.getByPlaceholder("tu@ejemplo.com").fill("docente@etec.uba.ar");
+    await page.getByPlaceholder("••••••••").fill("docente");
+    await page.getByRole("button", { name: "Continuar" }).click();
+    await expect(
+      page.getByRole("banner").getByText("Docente Etec")
+    ).toBeVisible();
+  });
+
+  test.skip("Para iniciar sesión, el formulario debe enviar email y constraseña a la API correspondiente", async ({
+    page,
+  }) => {
+    await page.route("*/**/api/users/sign-in", async (_, request) => {
+      const data = request.postDataJSON();
+      expect(data.email).toBe("docente@etec.uba.ar");
+      expect(data.password).toBe("docente");
+    });
+
+    await page.goto("/users/sign-in");
+    await page.getByPlaceholder("tu@ejemplo.com").fill("docente@etec.uba.ar");
+    await page.getByPlaceholder("••••••••").fill("docente");
+    await page.getByRole("button", { name: "Continuar" }).click();
+  });
 });

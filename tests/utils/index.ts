@@ -6,10 +6,10 @@ export const initDB = async () => {
   try {
     await db.users.create({
       data: {
-        email: "jdoe@test.com",
+        email: "docente@etec.uba.ar",
         password: await bcrypt.hash("passtesting", 10),
-        name: "John",
-        lastname: "Doe",
+        nombre: "Docente",
+        apellido: "Etec",
       },
     });
   } catch (error) {
