@@ -12,9 +12,6 @@ const espacios = [
 export default function Page() {
   return (
     <>
-      <div className="mb-8">
-        <h2 className="text-xl font-semibold">Disponibilidad de Aulas</h2>
-      </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {espacios.map((espacio) => {
           return (
