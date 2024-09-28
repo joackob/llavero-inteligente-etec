@@ -1,5 +1,4 @@
-"use client";
-import { useUser } from "@/app/hooks/useUsers";
+import { userActions } from "@/app/hooks/useUsers";
 import {
   BotonParaCerrarSesion,
   BotonParaIniciarSesion,
@@ -9,17 +8,18 @@ import {
 } from "./header-components";
 
 const Header = () => {
-  const usuario = useUser();
+  const usuario = userActions();
 
   return (
     <Encabezado>
       <LogoETEC />
       {usuario.sesionIniciada() ? (
-        <InformacionSobreElUsuario nombre={usuario.nombreCompleto()}>
-          <BotonParaCerrarSesion alSerPresionado={usuario.cerrarSesion} />
-        </InformacionSobreElUsuario>
+        <>
+          <InformacionSobreElUsuario nombre={usuario.nombreCompleto()} />
+          <BotonParaCerrarSesion />
+        </>
       ) : (
-        <BotonParaIniciarSesion alSerPresionado={usuario.iniciarSesion} />
+        <BotonParaIniciarSesion />
       )}
     </Encabezado>
   );

@@ -10,6 +10,17 @@ test.describe("Como usuario, quiero iniciar mi sesión en el sistema para poder 
     await cleanDB();
   });
 
+  test.skip("La api '/espacios' permite visualizar el estado de cada una de las llaves sin la necesidad de visualizar", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.getByText("213", { exact: true })).toBeVisible();
+    await expect(page.getByText("214", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Iniciar Sesión" })
+    ).toBeVisible();
+  });
+
   test.skip("No es necesario inicar sesión para visualizar el estado de cada una de las llaves", async ({
     page,
   }) => {

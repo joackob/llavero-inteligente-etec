@@ -1,16 +1,16 @@
 import db from "@/db";
 import bcrypt from "bcrypt";
-import { Prisma, Users } from "@prisma/client";
+import { Prisma, Usuarios } from "@prisma/client";
 import { SignUpUserRequest, SignUpUserResult } from "../types";
 import { InternalServerError } from "@/app/api/errors";
 
 type SignUpUserProps = SignUpUserRequest;
-type User = Users;
+type User = Usuarios;
 
 export const create = async (props: SignUpUserProps): Promise<User> => {
   try {
     props.password = await bcrypt.hash(props.password, 10);
-    const user = await db.users.create({
+    const user = await db.usuarios.create({
       data: {
         nombre: props.name,
         apellido: props.lastname,

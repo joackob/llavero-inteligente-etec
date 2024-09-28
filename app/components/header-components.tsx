@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogIn, User } from "lucide-react";
 import { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 export const Encabezado = ({ children }: { children: ReactNode }) => (
   <header className="bg-white shadow-sm">
@@ -12,47 +15,37 @@ export const Encabezado = ({ children }: { children: ReactNode }) => (
 );
 
 export const LogoETEC = () => (
-  <h1 className="text-2xl font-bold text-gray-900">logo etec uba</h1>
+  <a href="/">
+    <h1 className="text-2xl">
+      <span className="uppercase font-bold">.uba</span>
+      <span className="uppercase font-semibold text-sky-600">etec</span>
+    </h1>
+  </a>
 );
 
-type EventoAlSerPresionado = () => void;
+export const BotonParaIniciarSesion = () => {
+  return (
+    <a href="/users/sign-in">
+      <Button variant="link">
+        <LogIn className="mr-2 h-4 w-4" /> Iniciar Sesión
+      </Button>
+    </a>
+  );
+};
 
-export const BotonParaIniciarSesion = ({
-  alSerPresionado,
-}: {
-  alSerPresionado: EventoAlSerPresionado;
-}) => (
-  <Button onClick={() => alSerPresionado()}>
-    <LogIn className="mr-2 h-4 w-4" /> Iniciar Sesión
-  </Button>
-);
+export const BotonParaCerrarSesion = () => {
+  return <Button variant="default">Cerrar Sesión</Button>;
+};
 
-export const BotonParaCerrarSesion = ({
-  alSerPresionado,
-}: {
-  alSerPresionado: EventoAlSerPresionado;
-}) => (
-  <Button variant="outline" onClick={() => alSerPresionado()}>
-    Cerrar Sesión
-  </Button>
-);
-
-export const InformacionSobreElUsuario = ({
-  nombre,
-  children,
-}: {
-  nombre: string;
-  children: ReactNode;
-}) => {
+export const InformacionSobreElUsuario = ({ nombre }: { nombre: string }) => {
   return (
     <div className="flex items-center space-x-4">
-      <span className="text-sm text-gray-700">{nombre}</span>
       <Avatar>
         <AvatarFallback>
           <User className="h-4 w-4" />
         </AvatarFallback>
       </Avatar>
-      {children}
+      <span className="font-bold text-gray-600">{nombre}</span>
     </div>
   );
 };

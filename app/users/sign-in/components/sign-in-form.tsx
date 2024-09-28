@@ -23,13 +23,12 @@ export default function SignIn() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center mt-[10vh]  bg-gray-100">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Iniciar Sesión</CardTitle>
           <CardDescription>
-            Ingresa tus credenciales para acceder al sistema de inventario de
-            llaves.
+            Ingresa tus credenciales para acceder al sistema
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -40,6 +39,7 @@ export default function SignIn() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="tu@ejemplo.com"
                   required
                 />
@@ -50,6 +50,7 @@ export default function SignIn() {
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
+                    name="password"
                     placeholder="••••••••"
                     required
                   />

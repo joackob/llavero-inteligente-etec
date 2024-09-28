@@ -1,10 +1,8 @@
-import { Users } from "@prisma/client";
+import { Usuario } from "@/app/api/types";
 
-type User = Users;
-
-export const reply = (user: User): Response => {
+export const reply = (usuario: Usuario): Response => {
   return Response.json(
-    { name: user.nombre, lastname: user.apellido, email: user.email },
+    { name: usuario.nombre, lastname: usuario.apellido, email: usuario.email },
     { status: 201 }
   );
 };

@@ -1,5 +1,6 @@
-import { useProcessStatus } from "@/app/hooks";
-import { useBrowser } from "@/app/hooks";
+"use client";
+import { useProcessStatus } from "@/app/hooks/useProcessStatus";
+import { useBrowser } from "@/app/hooks/useBrowser";
 import { post } from "../api";
 import { SignInProps } from "../types";
 
@@ -23,5 +24,10 @@ export const useSignInProcess = () => {
   };
 
   const { isError, isLoading, getInformation } = process;
-  return { signIn, isError, isLoading, getInformation } as const;
+  return {
+    iniciarSesion: signIn,
+    huboUnError: isError,
+    estaCargando: isLoading,
+    obtenerInformacion: getInformation,
+  } as const;
 };

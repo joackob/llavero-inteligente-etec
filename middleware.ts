@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { autherize } from "./app/api/auth/autherize";
+import { autorizar } from "./app/api/auth/autorizar";
 
 const middleware = async (req: NextRequest): Promise<NextResponse> => {
-  return await autherize(req);
+  try {
+    return await autorizar(req);
+  } catch (error) {
+    console.log(error);
+    return NextResponse.redirect(new URL("/users/sign-in"));
+  }
 };
 
-export default middleware;
-
 export const config = { matcher: "/users/dashboard/:path" };
+
+export default middleware;

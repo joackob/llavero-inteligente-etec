@@ -1,7 +1,7 @@
 import { test, expect } from "bun:test";
-import { encryptID } from "../utils";
+import { encriptarIDDeUsuario } from "../utils";
 
 test("Dada un id determinado, se debe generar un token", async () => {
-  const token = await encryptID("id");
+  const token = await encriptarIDDeUsuario("id");
   expect(token).toBeDefined();
 });

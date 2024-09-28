@@ -4,7 +4,7 @@ import { Prisma } from "@prisma/client";
 
 export const initDB = async () => {
   try {
-    await db.users.create({
+    await db.usuarios.create({
       data: {
         email: "docente@etec.uba.ar",
         password: await bcrypt.hash("passtesting", 10),
@@ -12,6 +12,7 @@ export const initDB = async () => {
         apellido: "Etec",
       },
     });
+    await db.llaves.create({ data: { espacio: "213", ocupada: false } });
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error.message);
@@ -21,7 +22,8 @@ export const initDB = async () => {
 
 export const cleanDB = async () => {
   try {
-    await db.users.deleteMany();
+    await db.usuarios.deleteMany();
+    await db.llaves.deleteMany();
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error.message);

@@ -1,15 +1,15 @@
 import db from "@/db";
 import bcrypt from "bcrypt";
-import { Prisma, Users } from "@prisma/client";
+import { Prisma, Usuarios } from "@prisma/client";
 import { InternalServerError, UnauthorizedError } from "@/app/api/errors";
 import { SignInUserRequest } from "../users/sign-in/types";
 
-type User = Users;
+type User = Usuarios;
 type AuthenticateProps = SignInUserRequest;
 
-export const authenticate = async (props: AuthenticateProps): Promise<User> => {
+export const autenticar = async (props: AuthenticateProps): Promise<User> => {
   try {
-    const user = await db.users.findUnique({
+    const user = await db.usuarios.findUnique({
       where: {
         email: props.email,
       },
@@ -28,7 +28,7 @@ export const authenticate = async (props: AuthenticateProps): Promise<User> => {
       error instanceof Prisma.PrismaClientUnknownRequestError;
     if (isPrismaError) {
       throw new InternalServerError(
-        `Error interno en la base de datos: ${error.message}`,
+        `Error interno en la base de datos: ${error.message}`
       );
     }
     throw error;

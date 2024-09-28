@@ -1,3 +1,3 @@
-import { Users } from "@prisma/client";
+import { Usuarios } from "@prisma/client";
 
-export type User = Users;
+export type Usuario = Usuarios;
