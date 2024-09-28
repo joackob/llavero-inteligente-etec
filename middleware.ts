@@ -5,7 +5,6 @@ const middleware = async (req: NextRequest): Promise<NextResponse> => {
   try {
     return await autorizar(req);
   } catch (error) {
-    console.log(error);
     return NextResponse.redirect(new URL("/users/sign-in"));
   }
 };

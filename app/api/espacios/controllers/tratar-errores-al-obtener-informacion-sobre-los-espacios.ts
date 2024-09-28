@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { UnauthorizedError } from "../../errors";
 
 export const tratarErroresAlObtenerInformacionSobreLosEspacios = async (
   error: unknown

@@ -21,6 +21,7 @@ export const obtenerInformacionSobreQuienesOcupanLosEspacios = async () => {
       },
     },
   });
+
   return espacios.map((espacio) => {
     return {
       id: espacio.id,

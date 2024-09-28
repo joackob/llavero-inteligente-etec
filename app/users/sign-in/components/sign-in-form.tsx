@@ -18,8 +18,6 @@ export default function SignIn() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    console.log("Iniciar sesión");
   };
 
   return (
