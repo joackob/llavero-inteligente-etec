@@ -1,12 +1,11 @@
-"use client";
-
-import SignInForm from "./components/sign-in-form";
+import FormularioParaInicioDeSesion from "./components/formulario-para-inicio-de-sesion";
+import TarjetaFormularioParaInicioDeSesion from "./components/tarjeta-para-formulario-de-inicio-de-sesion";
 
 const Page = () => {
   return (
-    <>
-      <SignInForm />;
-    </>
+    <TarjetaFormularioParaInicioDeSesion>
+      <FormularioParaInicioDeSesion />;
+    </TarjetaFormularioParaInicioDeSesion>
   );
 };
 

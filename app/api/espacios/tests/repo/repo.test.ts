@@ -1,14 +1,14 @@
 import { test, describe, afterAll, beforeAll, expect } from "bun:test";
-import { cleanDB, initDB } from "@/tests/utils";
+import { limpiarBaseDeDatos, inicializarBaseDeDatos } from "@/tests/utils";
 import { obtenerInformacionSobreQuienesOcupanLosEspacios } from "@/app/api/espacios/repo";
 
 describe("Obtener informacion solo de los espacios", async () => {
   beforeAll(async () => {
-    await initDB();
+    await inicializarBaseDeDatos();
   });
 
   afterAll(async () => {
-    await cleanDB();
+    await limpiarBaseDeDatos();
   });
 
   test("Deberia existir un espacio registrado en la base de datos", async () => {

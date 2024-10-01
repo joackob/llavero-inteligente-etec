@@ -1,5 +1,5 @@
 import { jwtVerify, SignJWT } from "jose";
-import { InternalServerError } from "@/app/api/errors";
+import { ErrorDesconocidoDelServidor } from "@/app/api/errors";
 
 const secret = process.env.JWT_SECRET ?? "secret";
 const secretKey = new TextEncoder().encode(secret);
@@ -14,7 +14,7 @@ export const encriptarIDDeUsuario = async (id: string): Promise<string> => {
     signJWT.setExpirationTime("1h");
     return await signJWT.sign(secretKey);
   } catch (error) {
-    throw new InternalServerError("Error al crear credenciales");
+    throw new ErrorDesconocidoDelServidor("Error al crear credenciales");
   }
 };
 
@@ -25,6 +25,6 @@ export const desencriptarIDDeUsuario = async (
     const session = await jwtVerify<{ id: string }>(token, secretKey);
     return session.payload?.id;
   } catch (error) {
-    throw new InternalServerError("Error al verificar credenciales");
+    throw new ErrorDesconocidoDelServidor("Error al verificar credenciales");
   }
 };

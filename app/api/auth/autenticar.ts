@@ -1,36 +1,43 @@
-import db from "@/db";
 import bcrypt from "bcrypt";
-import { Prisma, Usuarios } from "@prisma/client";
-import { InternalServerError, UnauthorizedError } from "@/app/api/errors";
-import { SignInUserRequest } from "../users/sign-in/types";
+import { Usuarios } from "@prisma/client";
+import {
+  ServicioInhabilitado,
+  SolicitudSinCredencialesCorrespondientes,
+} from "@/app/api/errors";
+import { DatosNecesariosParaIniciarLaSesionDeUnUsuario } from "../users/sign-in/parser";
+import { encontrarAUnUsuarioPorSuEmail } from "./repo/encontrar-un-usuario-por-su-email";
 
-type User = Usuarios;
-type AuthenticateProps = SignInUserRequest;
+export const autenticarLosDatosDeUnUsuario = async (
+  datos: DatosNecesariosParaIniciarLaSesionDeUnUsuario
+): Promise<Usuarios> => {
+  const usuario = await encontrarAUnUsuarioPorSuEmail(datos.email);
+  await chequearContrasenas({
+    contrasenaDeLaSolicitud: datos.password,
+    contrasenaDelUsuario: usuario.password,
+  });
+  return usuario;
+};
 
-export const autenticar = async (props: AuthenticateProps): Promise<User> => {
+const chequearContrasenas = async ({
+  contrasenaDelUsuario,
+  contrasenaDeLaSolicitud,
+}: {
+  contrasenaDelUsuario: string;
+  contrasenaDeLaSolicitud: string;
+}): Promise<void> => {
   try {
-    const user = await db.usuarios.findUnique({
-      where: {
-        email: props.email,
-      },
-    });
-    if (!user) {
-      throw new UnauthorizedError("Usuario no esta registrado");
-    }
-    const passIsCorrect = await bcrypt.compare(props.password, user.password);
-    if (!passIsCorrect) {
-      throw new UnauthorizedError("Usuario o contraseña incorrectos");
-    }
-    return user;
-  } catch (error) {
-    const isPrismaError =
-      error instanceof Prisma.PrismaClientKnownRequestError ||
-      error instanceof Prisma.PrismaClientUnknownRequestError;
-    if (isPrismaError) {
-      throw new InternalServerError(
-        `Error interno en la base de datos: ${error.message}`
+    const lasContrasenasCoinciden = await bcrypt.compare(
+      contrasenaDeLaSolicitud,
+      contrasenaDelUsuario
+    );
+    if (!lasContrasenasCoinciden) {
+      throw new SolicitudSinCredencialesCorrespondientes(
+        "Usuario o contraseña incorrectos"
       );
     }
-    throw error;
+  } catch (error) {
+    throw new ServicioInhabilitado(
+      "El servicio para el chequeo de la password no se encuentra disponible"
+    );
   }
 };

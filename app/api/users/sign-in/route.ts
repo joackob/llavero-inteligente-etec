@@ -1,11 +1,5 @@
-import { request } from "http";
-import { handleSignInUserErrors } from "./controllers/handleSignInUserErrors";
-import { signInUser } from "./controllers/signInUser";
+import { NextRequest, NextResponse } from "next/server";
+import { intentarIniciarLaSesionDeUnUsuario } from "./controllers/intentar-iniciar-la-sesion-de-un-usuario";
 
-export const POST = async (req: Request): Promise<Response> => {
-  try {
-    return await signInUser(req);
-  } catch (error) {
-    return handleSignInUserErrors(error);
-  }
-};
+export const POST = async (solicitud: NextRequest): Promise<NextResponse> =>
+  await intentarIniciarLaSesionDeUnUsuario(solicitud);

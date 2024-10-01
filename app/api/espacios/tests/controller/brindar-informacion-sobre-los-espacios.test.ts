@@ -1,14 +1,14 @@
 import { test, expect, describe, beforeAll, afterAll } from "bun:test";
-import { cleanDB, initDB } from "@/tests/utils";
+import { limpiarBaseDeDatos, inicializarBaseDeDatos } from "@/tests/utils";
 import { brindarInformacionSobreQuienesOcupanLosEspacios } from "@/app/api/espacios/controllers/brindar-informacion-sobre-los-espacios";
 
 describe("Como usuario, quiero visualizar un listado completo de las llaves para conocer su disponibilidad y quien las posee, sin la necesidad de estar loggeado.", async () => {
   beforeAll(async () => {
-    await initDB();
+    await inicializarBaseDeDatos();
   });
 
   afterAll(async () => {
-    await cleanDB();
+    await limpiarBaseDeDatos();
   });
 
   test("A través de la api `/espacios` puedo obtener un listado completo de las llaves y su disponiblidad", async () => {

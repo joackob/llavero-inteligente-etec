@@ -2,16 +2,16 @@ import { userActions } from "@/app/hooks/useUsers";
 import {
   BotonParaCerrarSesion,
   BotonParaIniciarSesion,
-  Encabezado,
+  ContenedorDelEncabezado,
   InformacionSobreElUsuario,
   LogoETEC,
-} from "./header-components";
+} from "./componentes-para-el-encabezado";
 
-const Header = () => {
+const EncabezadoCompartidoPorTodoElSitio = () => {
   const usuario = userActions();
 
   return (
-    <Encabezado>
+    <ContenedorDelEncabezado>
       <LogoETEC />
       {usuario.sesionIniciada() ? (
         <>
@@ -21,8 +21,8 @@ const Header = () => {
       ) : (
         <BotonParaIniciarSesion />
       )}
-    </Encabezado>
+    </ContenedorDelEncabezado>
   );
 };
 
-export default Header;
+export default EncabezadoCompartidoPorTodoElSitio;

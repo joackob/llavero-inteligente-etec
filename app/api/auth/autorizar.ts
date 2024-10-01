@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { desencriptarIDDeUsuario } from "./utils";
-import { UnauthorizedError } from "../errors";
+import { SolicitudSinCredencialesCorrespondientes } from "../errors";
 import db from "@/db";
 
 export const autorizar = async (
@@ -55,11 +55,15 @@ const solicitarCredenciales = (): NextResponse => {
 const obtenerTokenDeSesion = (req: NextRequest): string => {
   const cookie = req.cookies.get("session");
   if (!cookie) {
-    throw new UnauthorizedError("No se ha iniciado sesión");
+    throw new SolicitudSinCredencialesCorrespondientes(
+      "No se ha iniciado sesión"
+    );
   }
   const token = cookie.value;
   if (!token) {
-    throw new UnauthorizedError("No se ha iniciado sesión");
+    throw new SolicitudSinCredencialesCorrespondientes(
+      "No se ha iniciado sesión"
+    );
   }
   return token;
 };

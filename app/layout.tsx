@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
-import Header from "./components/header";
-import Main from "./components/main";
+import EncabezadoCompartidoPorTodoElSitio from "./components/encabezado-compartido-por-todo-el-sitio";
 import type { Metadata } from "next";
 import "./global.css";
 
@@ -15,17 +14,27 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <Contenedor>
-      <Header />
-      <Main>{children}</Main>
-    </Contenedor>
+    <ContenedorBasicoParaTodoElSitio>
+      <EncabezadoCompartidoPorTodoElSitio />
+      <CuerpoPrincipalDelSitio>{children}</CuerpoPrincipalDelSitio>
+    </ContenedorBasicoParaTodoElSitio>
   );
 }
 
-const Contenedor = ({ children }: Readonly<{ children: ReactNode }>) => {
+const ContenedorBasicoParaTodoElSitio = ({
+  children,
+}: Readonly<{ children: ReactNode }>) => {
   return (
     <html lang="es">
       <body className="min-h-screen bg-gray-100">{children}</body>
     </html>
+  );
+};
+
+const CuerpoPrincipalDelSitio = ({ children }: { children: ReactNode }) => {
+  return (
+    <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      {children}
+    </main>
   );
 };

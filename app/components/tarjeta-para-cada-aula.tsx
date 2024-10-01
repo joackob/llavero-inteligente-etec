@@ -5,9 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Mail, Key } from "lucide-react";
+import { MessageCircle, Key } from "lucide-react";
 import Image from "next/image";
 
 const TarjetaParaCadaAula = ({

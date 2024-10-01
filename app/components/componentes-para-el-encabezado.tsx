@@ -4,9 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { LogIn, User } from "lucide-react";
 import { ReactNode } from "react";
-import { useRouter } from "next/navigation";
 
-export const Encabezado = ({ children }: { children: ReactNode }) => (
+export const ContenedorDelEncabezado = ({
+  children,
+}: {
+  children: ReactNode;
+}) => (
   <header className="bg-white shadow-sm">
     <div className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
       {children}

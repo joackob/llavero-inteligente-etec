@@ -1,17 +1,8 @@
-import { cleanDB, initDB } from "@/tests/utils";
 import { test, expect } from "@playwright/test";
 
 test.describe.skip(
   "Como usuario, quiero iniciar mi sesión en el sistema para poder operar dentro de él",
   () => {
-    test.beforeAll(async () => {
-      await initDB();
-    });
-
-    test.afterAll(async () => {
-      await cleanDB();
-    });
-
     test.skip("La api '/espacios' permite visualizar el estado de cada una de las llaves sin la necesidad de visualizar", async ({
       page,
     }) => {

@@ -1,13 +1,13 @@
+import { CredencialesParaLaSesionDeUnUsuario } from "@/app/api/auth/crear-credenciales";
 import { NextResponse } from "next/server";
 
-type ReplyProps = {
-  token: string;
-};
-
-export const reply = (result: ReplyProps): Response => {
+export const redirigirConLasCredencialesCorrespondientes = (
+  result: CredencialesParaLaSesionDeUnUsuario
+): NextResponse => {
+  // const response = NextResponse.redirect("/");
   const response = NextResponse.json(
-    { message: "Usuario correctamente autenticado" },
-    { status: 202 },
+    { mensaje: "Sesion iniciada" },
+    { status: 202 }
   );
   response.cookies.set({
     name: "session",

@@ -1,19 +1,22 @@
-import { cleanDB, initDB } from "@/tests/utils";
+import { limpiarBaseDeDatos, inicializarBaseDeDatos } from "@/tests/utils";
 import { test, expect, beforeAll, afterAll } from "bun:test";
-import { autenticar } from "../autenticar";
-import { UnauthorizedError } from "../../errors";
+import { autenticarLosDatosDeUnUsuario } from "../autenticar";
+import { SolicitudSinCredencialesCorrespondientes } from "../../errors";
 
 beforeAll(async () => {
-  await initDB();
+  await inicializarBaseDeDatos();
 });
 
 afterAll(async () => {
-  await cleanDB();
+  await limpiarBaseDeDatos();
 });
 
 test("Dada una contraseña invalida, se espera la excepción UnauthorizeError ", async () => {
   expect(
     async () =>
-      await autenticar({ email: "jdoe@test.com", password: "invalid" })
-  ).toThrowError(UnauthorizedError);
+      await autenticarLosDatosDeUnUsuario({
+        email: "jdoe@test.com",
+        password: "invalid",
+      })
+  ).toThrowError(SolicitudSinCredencialesCorrespondientes);
 });

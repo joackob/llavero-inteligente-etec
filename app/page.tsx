@@ -1,4 +1,5 @@
 import TarjetaParaCadaAula from "./components/tarjeta-para-cada-aula";
+import TableroDeTarjetasParaAulas from "./components/tablero-de-tarjetas-para-aulas";
 
 const espacios = [
   { id: 1, name: "Aula 101", image: "https://placehold.co/300x200" },
@@ -11,19 +12,17 @@ const espacios = [
 
 export default function Page() {
   return (
-    <>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {espacios.map((espacio) => {
-          return (
-            <TarjetaParaCadaAula
-              key={espacio.id}
-              espacio={espacio.name}
-              reservado={espacio.id % 2 === 0}
-              reservadoPor={"Juan Perez"}
-            />
-          );
-        })}
-      </div>
-    </>
+    <TableroDeTarjetasParaAulas>
+      {espacios.map((espacio) => {
+        return (
+          <TarjetaParaCadaAula
+            key={espacio.id}
+            espacio={espacio.name}
+            reservado={espacio.id % 2 === 0}
+            reservadoPor={"Juan Perez"}
+          />
+        );
+      })}
+    </TableroDeTarjetasParaAulas>
   );
 }

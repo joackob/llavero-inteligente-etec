@@ -22,6 +22,12 @@ export default defineConfig({
   // Reporter to use
   reporter: "html",
 
+  // Global setup for all tests.
+  globalSetup: "./tests/utils/setup.ts",
+
+  // Global teardown for all tests.
+  globalTeardown: "./tests/utils/teardown.ts",
+
   use: {
     // Base URL to use in actions like `await page.goto('/')`.
     baseURL: "http://localhost:3000",
