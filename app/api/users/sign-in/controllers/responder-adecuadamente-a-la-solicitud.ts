@@ -1,10 +1,9 @@
 import { CredencialesParaLaSesionDeUnUsuario } from "@/app/api/auth/crear-credenciales";
 import { NextResponse } from "next/server";
 
-export const redirigirConLasCredencialesCorrespondientes = (
+export const responderAdecuadamenteALaSolicitud = (
   credenciales: CredencialesParaLaSesionDeUnUsuario
 ): NextResponse => {
-  // const response = NextResponse.redirect("/", { status: 302 });
   const response = NextResponse.json(
     { mensaje: "Sesion iniciada" },
     { status: 302 }
