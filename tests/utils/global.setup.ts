@@ -1,6 +1,7 @@
 import db from "@/db";
 import bcrypt from "bcrypt";
 import { Prisma } from "@prisma/client";
+import limpiarBaseDeDatos from "./global.teardown";
 
 export const inicializarBaseDeDatos = async () => {
   try {
@@ -13,10 +14,13 @@ export const inicializarBaseDeDatos = async () => {
         apellido: "Etec",
       },
     });
+    return limpiarBaseDeDatos;
   } catch (error) {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       console.log(error.message);
     }
+
+    return limpiarBaseDeDatos;
   }
 };
 

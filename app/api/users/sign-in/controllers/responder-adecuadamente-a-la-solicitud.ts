@@ -2,16 +2,16 @@ import { CredencialesParaLaSesionDeUnUsuario } from "@/app/api/auth/crear-creden
 import { NextResponse } from "next/server";
 
 export const redirigirConLasCredencialesCorrespondientes = (
-  result: CredencialesParaLaSesionDeUnUsuario
+  credenciales: CredencialesParaLaSesionDeUnUsuario
 ): NextResponse => {
-  // const response = NextResponse.redirect("/");
+  // const response = NextResponse.redirect("/", { status: 302 });
   const response = NextResponse.json(
     { mensaje: "Sesion iniciada" },
-    { status: 202 }
+    { status: 302 }
   );
   response.cookies.set({
     name: "session",
-    value: result.token,
+    value: credenciales.token,
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",

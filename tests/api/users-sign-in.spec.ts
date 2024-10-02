@@ -10,6 +10,6 @@ test.describe("Como usuario, quiero iniciar mi sesion en el sistema para solicit
         password: "passtesting",
       },
     });
-    expect(response.status()).toBe(202);
+    expect(response.status()).toBe(302);
   });
 });
