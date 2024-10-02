@@ -3,8 +3,8 @@ import { Usuarios } from "@prisma/client";
 import {
   ServicioInhabilitado,
   SolicitudSinCredencialesCorrespondientes,
-} from "@/app/api/errors";
-import { DatosNecesariosParaIniciarLaSesionDeUnUsuario } from "../users/sign-in/parser";
+} from "@/app/api/excepciones";
+import { DatosNecesariosParaIniciarLaSesionDeUnUsuario } from "@/app/api/usuarios/iniciar-sesion-en-el-sistema/parser";
 import { encontrarAUnUsuarioPorSuEmail } from "./repo/encontrar-un-usuario-por-su-email";
 
 export const autenticarLosDatosDeUnUsuario = async (

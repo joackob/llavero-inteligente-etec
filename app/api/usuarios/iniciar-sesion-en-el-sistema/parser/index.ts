@@ -1,5 +1,5 @@
 import z, { ZodError } from "zod";
-import { SolicitudMalPlanteada } from "@/app/api/errors";
+import { SolicitudMalPlanteada } from "@/app/api/excepciones";
 
 export const validarLosDatosDeLaSolicitud = (
   solicitud: Readonly<any>

@@ -1,4 +1,4 @@
-import { Excepcion } from "@/app/api/errors";
+import { Excepcion } from "@/app/api/excepciones";
 import { NextResponse } from "next/server";
 
 export const tratarExcepcionesAlInscribirAUnUsuario = (

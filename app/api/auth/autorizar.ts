@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { desencriptarIDDeUsuario } from "./utils";
-import { SolicitudSinCredencialesCorrespondientes } from "../errors";
+import { SolicitudSinCredencialesCorrespondientes } from "@/app/api/excepciones";
 import db from "@/db";
 
 export const autorizar = async (

@@ -1,5 +1,5 @@
 import { jwtVerify, SignJWT } from "jose";
-import { ErrorDesconocidoDelServidor } from "@/app/api/errors";
+import { ErrorDesconocidoDelServidor } from "@/app/api/excepciones";
 
 const secret = process.env.JWT_SECRET ?? "secret";
 const secretKey = new TextEncoder().encode(secret);

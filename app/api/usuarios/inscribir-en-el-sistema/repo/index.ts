@@ -5,7 +5,7 @@ import {
   BaseDeDatosNoCumplioConLaTareaSolicitada,
   ErrorDesconocidoDelServidor,
   ServicioInhabilitado,
-} from "@/app/api/errors";
+} from "@/app/api/excepciones";
 import { DatosNecesariosParaInscribirAUnUsuario } from "../parser";
 
 export const guardarDatosDelUsuario = async (

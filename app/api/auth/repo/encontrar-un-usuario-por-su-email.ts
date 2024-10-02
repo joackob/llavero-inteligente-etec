@@ -1,6 +1,6 @@
 import db from "@/db";
 import { Usuarios } from "@prisma/client";
-import { UsuarioNoRegistrado } from "@/app/api/errors";
+import { UsuarioNoRegistrado } from "@/app/api/excepciones";
 
 export const encontrarAUnUsuarioPorSuEmail = async (
   email: string
