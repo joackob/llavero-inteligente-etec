@@ -4,7 +4,7 @@ export const userActions = () => {
     apellido: "Pérez",
   };
 
-  const sesionIniciada = () => false;
+  const sesionIniciada = () => true;
   const nombreCompleto = () => `${usuario?.nombre} ${usuario?.apellido}`;
 
   return {

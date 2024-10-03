@@ -28,7 +28,7 @@ export const LogoETEC = () => (
 
 export const BotonParaIniciarSesion = () => {
   return (
-    <a href="/users/sign-in">
+    <a href="/usuarios/iniciar-sesion-en-el-sistema">
       <Button variant="link">
         <LogIn className="mr-2 h-4 w-4" /> Iniciar Sesión
       </Button>
