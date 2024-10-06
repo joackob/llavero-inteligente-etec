@@ -1,11 +1,11 @@
-import { Usuario } from "@/app/api/types";
+import { Usuarios } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 export const responderAdecuadamenteALaSolicitud = (
-  usuario: Usuario
+  usuario: Usuarios,
 ): NextResponse => {
   return NextResponse.json(
     { mensaje: `¡Bienvenide, ${usuario.nombre}!` },
-    { status: 201 }
+    { status: 201 },
   );
 };

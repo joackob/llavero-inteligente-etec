@@ -1,4 +1,4 @@
-import { Usuario } from "@/app/api/types";
+import { Usuarios } from "@prisma/client";
 import { encriptarIDDeUsuario } from "./utils";
 
 export type CredencialesParaLaSesionDeUnUsuario = {
@@ -6,7 +6,7 @@ export type CredencialesParaLaSesionDeUnUsuario = {
 };
 
 export const crearCreadencialesParaSuSesion = async (
-  user: Usuario
+  user: Usuarios,
 ): Promise<CredencialesParaLaSesionDeUnUsuario> => {
   const token = await encriptarIDDeUsuario(user.id);
   return {
