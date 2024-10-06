@@ -1,14 +1,6 @@
 import { NextResponse } from "next/server";
+import { tratarExcepciones } from "../../excepciones";
 
 export const tratarErroresAlObtenerInformacionSobreLosEspacios = async (
-  error: unknown
-): Promise<NextResponse> => {
-  return responderLamentandoUnErrorDesconocido();
-};
-
-const responderLamentandoUnErrorDesconocido = (): NextResponse => {
-  return NextResponse.json(
-    { error: "Lamentablemente se desconoce el origen del error" },
-    { status: 500 }
-  );
-};
+  excepcion: unknown
+): Promise<NextResponse> => tratarExcepciones(excepcion);

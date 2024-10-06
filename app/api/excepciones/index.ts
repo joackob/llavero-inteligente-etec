@@ -1,5 +1,17 @@
 import { NextResponse } from "next/server";
 
+export const tratarExcepciones = (excepcion: unknown): NextResponse => {
+  try {
+    return (excepcion as Excepcion).brindarUnaRespuestaAdecuada();
+  } catch {
+    const excepcionDesconocida = new Excepcion({
+      codigoHttp: 500,
+      mensaje: "Algo inesperado ocurrio con el servicio",
+    });
+    return excepcionDesconocida.brindarUnaRespuestaAdecuada();
+  }
+};
+
 type PropiedadesDeUnaExcepcion = {
   codigoHttp: number;
   mensaje: string;
