@@ -1,75 +1,87 @@
-#include <WiFi.h>
+//Incluir bibliotecas
+#include <WiFi.h>  //
 #include <PubSubClient.h>
 
-// Configura tus credenciales de Wi-Fi
-const char* ssid = "ETEC-UBA";
-const char* password = "ETEC-alumnos@UBA";
 
-// Configura los parámetros del broker MQTT
-const char* mqttServer = "10.9.120.176"; // O tu broker
-const int mqttPort = 1883;
+// crear constantes con valores de configuracion(p. ej. contraseña de WiFi)
+const char* WIFI_SSID = "ETEC-UBA";    // SSID( nombre de la red WiFi)
+const char* CLAVE = "ETEC-alumnos@UBA";            // Contraseña de wifi
+const char* MQTT_BROKER = "10.9.121.240";  // MQTT Broker
+const int PUERTO_MQTT = 1883;              //Puerto MQTT
+const char* MQTT_TOPIC = "topic-prueba";   //Topic sin "#" y
+//crear objetos para gestionar las conexiones
 
-// Crea objetos para Wi-Fi y MQTT
-WiFiClient espClient;
-PubSubClient client(espClient);
+WiFiClient Cliente_esp;
+PubSubClient client(Cliente_esp);
 
+// callback sirve para manejar y responder a los mensajes que llegan al dispositivo desde un servidor MQTT (el broker)
+//Y ESTE BLOQUE DE CODIGO SE EJECUTA CUANDO LA PLACA RESIVE UN MSJ POR MQTT
+void callback(char* topic, byte* message, unsigned int length) {
+ // Imprimir el mensaje recibido en el topic
+ Serial.print("Mensaje recibido en el topic: ");
+ Serial.print(topic);
+ Serial.print(".Mensaje: ");
+ // Crear una cadena de caracteres (String) para almacenar el mensaje
+ String mensaje;
+
+
+
+
+ // Recorrer cada byte del mensaje recibido
+ for (int i = 0; i < length; i++) {
+   // Imprimir cada caracter del mensaje en el monitor serial
+   Serial.print((char)message[i]);
+   // Concatenar cada caracter al mensaje String
+   mensaje += (char)message[i];
+ }
+
+
+ // Imprimir un salto de línea para separar el mensaje recibido
+ Serial.println();
+
+
+}
 void setup() {
-  Serial.begin(115200);
-  
-  // Conectar a Wi-Fi
-  setupWiFi();
-  
-  // Configurar el servidor MQTT
-  client.setServer(mqttServer, mqttPort);
+ //  Iniciar puerto serie (para enviar mensajes informando el estado de la conexión de WiFi, los mensajes que recibimos por MQTT, etc.)
+ Serial.begin(115200);
+ WiFi.begin(WIFI_SSID, CLAVE);
+ Serial.print("Intentando conectar a wifi");
+
+
+
+
+ while (WiFi.status() != WL_CONNECTED) {
+   Serial.print(".");
+   delay(500);
+ }
+ Serial.println("Ya se conecto a WiFi");
+ Serial.println(WiFi.localIP());
+
+
+
+
+ client.setServer(MQTT_BROKER, PUERTO_MQTT);
+ // ACA LE DIGO QUIEN ERA EL CALLBACK
+ client.setCallback(callback);
+
+
+ // Conectarse al broker MQTT
+ while (!client.connected()) {
+   Serial.println("conectando a MQTT...");
+   if (client.connect("ESP32Client")) {
+     Serial.println("conectado");
+     client.subscribe(MQTT_TOPIC);                   // me suscribo al topic
+     client.publish(MQTT_TOPIC, "ESP32 conectado");  // publicando mensaje de prueba en el topic
+
+
+   } else {
+     Serial.print("Fallo en el estado");
+     Serial.print(client.state());
+     delay(2000);
+   }
+ }
 }
-
-void loop() {
-  // Reconnect if disconnected
-  if (!client.connected()) {
-    reconnect();
-  }
-  client.loop();
-
-  // Publicar un mensaje
-  String msg = "Hola desde ESP32";
-  if (client.publish("test/topic", msg.c_str())) {
-    Serial.println("Mensaje publicado");
-  } else {
-    Serial.println("Error al publicar el mensaje");
-  }
-
-  // Esperar 5 segundos antes de volver a publicar
-  delay(5000);
+void loop() 
+{
+ client.loop();
 }
-
-void setupWiFi() {
-  Serial.print("Conectando a Wi-Fi...");
-  WiFi.begin(ssid, password);
-
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(1000);
-    Serial.print(".");
-  }
-
-  Serial.println("\n¡Conectado!");
-  Serial.print("Dirección IP: ");
-  Serial.println(WiFi.localIP());
-}
-
-void reconnect() {
-  while (!client.connected()) {
-    Serial.print("Intentando conexión MQTT...");
-    
-    // Intenta conectarte sin usuario y contraseña
-    if (client.connect("ESP32Client")) {
-      Serial.println("¡Conectado al broker MQTT!");
-    } else {
-      Serial.print("Falló, rc=");
-      Serial.print(client.state());
-      Serial.println(" Intentando de nuevo en 5 segundos");
-      delay(5000);
-    }
-  }
-}
-
-
