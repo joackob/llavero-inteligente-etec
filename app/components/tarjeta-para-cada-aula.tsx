@@ -13,10 +13,12 @@ const TarjetaParaCadaAula = ({
   espacio,
   reservado,
   reservadoPor,
+  ocupada
 }: {
   espacio: string;
   reservado: boolean;
   reservadoPor: string;
+  ocupada: boolean;
 }) => {
   return (
     <Card className={`${reservado ? "bg-gray-200" : ""}`}>
@@ -30,20 +32,11 @@ const TarjetaParaCadaAula = ({
       </div>
       <CardHeader>
         <CardTitle className="text-center text-xl">{espacio}</CardTitle>
-        <CardDescription className="text-center">
-          {reservado ? (
-            <>
-              Ocupada por: <span className="font-bold">{reservadoPor}</span>
-            </>
-          ) : (
-            <span>Disponible</span>
-          )}
-        </CardDescription>
       </CardHeader>
       <CardContent className="flex row justify-stretch space-x-4">
-        {reservado ? (
+        {ocupada ? (
           <>
-            <Button className="w-full bg-gray-400" disabled={!reservado}>
+            <Button className="w-full bg-gray-400" disabled={!ocupada}>
               Mandale un mensajito <MessageCircle className="h-4 w-4 ml-2" />
             </Button>
           </>
