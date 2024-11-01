@@ -20,6 +20,25 @@ const TarjetaParaCadaAula = ({
   reservadoPor: string;
   ocupada: boolean;
 }) => {
+
+  const handleClick = (aula: string) => {
+    fetch('/api/llaves', {
+      method: 'POST', // Cambia a POST si envías un cuerpo
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ aula }), // Envía el número de aula
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // Manejar la respuesta
+    })
+    .catch(error => {
+      console.error('Error al enviar el número de aula:', error);
+    });
+  };
+  
+
   return (
     <Card className={`${reservado ? "bg-gray-200" : ""}`}>
       <div className="relative h-40">
@@ -41,7 +60,7 @@ const TarjetaParaCadaAula = ({
             </Button>
           </>
         ) : (
-          <Button className="w-full" disabled={reservado}>
+          <Button className="w-full" disabled={ocupada} onClick={() => handleClick(espacio)}>
             Solicitar Llave <Key className="h-4 w-4 ml-2" />
           </Button>
         )}
