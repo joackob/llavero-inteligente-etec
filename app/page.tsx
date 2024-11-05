@@ -4,7 +4,7 @@ import TableroDeTarjetasParaAulas from "./components/tablero-de-tarjetas-para-au
 import { getDownloadURL, ref, listAll } from "firebase/storage";
 import { storage } from "./lib/firebaseClient";
 import { useEffect, useState } from "react";
-
+import { config } from "@/config"
 const espacios = [
   { id: 1, name: "Aula 101", image: "https://placehold.co/300x200" },
   { id: 2, name: "Aula 102", image: "https://placehold.co/300x200" },
@@ -13,12 +13,11 @@ const espacios = [
   { id: 5, name: "Aula 305", image: "https://placehold.co/300x200" },
   { id: 6, name: "Aula 306", image: "https://placehold.co/300x200" },
 ];
-
 export default function Page() {
   const [espacios, setEspacios] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/espacios")
+    fetch(`${config.baseUrl}/api/espacios`)
       .then((data) => data.json())
       .then((response) => setEspacios(response.espacios));
   }, []);
@@ -60,7 +59,7 @@ export default function Page() {
               espacio={aula.espacio}
               ocupada={aula.ocupada}
               ocupadaPor={"Juan Perez"}
-              //  imageUrl={imageUrls[index] || espacio.image} // Use fetched image or placeholder
+            //  imageUrl={imageUrls[index] || espacio.image} // Use fetched image or placeholder
             />
           );
         })

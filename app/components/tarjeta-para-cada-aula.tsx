@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Key } from "lucide-react";
 import Image from "next/image";
-
+import { config } from "@/config"
 const TarjetaParaCadaAula = ({
   espacio,
   ocupadaPor,
@@ -19,7 +19,7 @@ const TarjetaParaCadaAula = ({
   ocupada: boolean;
 }) => {
   const handleClick = (aula: string) => {
-    fetch("/api/llaves", {
+    fetch(`${config.baseUrl}/api/llaves`, {
       method: "POST", // Cambia a POST si envías un cuerpo
       headers: {
         "Content-Type": "application/json",
