@@ -14,19 +14,15 @@ const espacios = [
   { id: 6, name: "Aula 306", image: "https://placehold.co/300x200" },
 ];
 
-
-
-
-
 export default function Page() {
-
   const [espacios, setEspacios] = useState([]);
-  
-  
-  useEffect(()=>{
-    fetch("http://localhost:3001/api/espacios").then(data => data.json()).then(response => setEspacios(response.espacios) )
-  },[])
-  // const [imageUrls, setImageUrls] = useState([]); guarda valor, set actualiza valor 
+
+  useEffect(() => {
+    fetch("http://localhost:3000/api/espacios")
+      .then((data) => data.json())
+      .then((response) => setEspacios(response.espacios));
+  }, []);
+  // const [imageUrls, setImageUrls] = useState([]); guarda valor, set actualiza valor
   //
   // useEffect(() => {
   //   const fetchImages = async () => {
@@ -54,23 +50,23 @@ export default function Page() {
   //   console.log(imageUrls)
   // },[imageUrls])
 
-
-
   return (
     <TableroDeTarjetasParaAulas>
-      {espacios ? espacios.map((aula, id) => {
-        return (
-          <TarjetaParaCadaAula
-            key={aula.id}
-            espacio={aula.espacio}
-            reservado={aula.id % 2 === 0}
-            ocupada={aula.ocupada} 
-            reservadoPor={"Juan Perez"}
-            //  imageUrl={imageUrls[index] || espacio.image} // Use fetched image or placeholder
-          />
-        );
-      }) : <p>No hay espacios disponibles</p>}
-      
+      {espacios ? (
+        espacios.map((aula, id) => {
+          return (
+            <TarjetaParaCadaAula
+              key={aula.id}
+              espacio={aula.espacio}
+              ocupada={aula.ocupada}
+              ocupadaPor={"Juan Perez"}
+              //  imageUrl={imageUrls[index] || espacio.image} // Use fetched image or placeholder
+            />
+          );
+        })
+      ) : (
+        <p>No hay espacios disponibles</p>
+      )}
     </TableroDeTarjetasParaAulas>
   );
 }

@@ -12,6 +12,7 @@
     "tests:watch": "bun test --watch **/*.test.ts",
     "create:test:e2e": "bunx playwright codegen",
     "init": "bunx prisma migrate dev --name init",
+    "init:db": "node ./db/init.mjs",
     "clean": "bun ./db/clean.ts",
     "lint": "next lint"
   },
