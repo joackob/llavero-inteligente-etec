@@ -30,7 +30,7 @@ model Llaves {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   espacio        String @unique
-  ocupada        Boolean          @default(false)
+  ocupado        Boolean          @default(false)
   delovoluciones Devoluciones[]
   prestamos      Prestamos[]
   transferencias Transferencias[]
@@ -68,45 +68,3 @@ model Transferencias {
   llaveId           String
 }
 
-// model Docentes{
-//   id String @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   name String 
-//   lastname String 
-//   email String @unique
-//   password String @unique
-//   registerAt DateTime @default(now())
-//   //date(registro de cuando saca la llave) hora y fecha ......
-//   //
-// }
-
-// model Limpieza{
-//   id String @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   name String 
-//   lastname String 
-//   email String @unique
-//   password String @unique
-// }
-
-// model Mantenimiento{
-//   id String @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   name String 
-//   lastname String 
-//   email String @unique
-//   password String @unique
-// }
-
-// model Seguridad{
-//   id String @id @default(uuid())
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-//   name String 
-//   lastname String 
-//   email String @unique
-//   password String @unique
-// }

@@ -8,15 +8,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Key } from "lucide-react";
 import Image from "next/image";
-import { config } from "@/config"
-const TarjetaParaCadaAula = ({
+import { config } from "@/config";
+const TarjetaParaCadaEspacio = ({
   espacio,
-  ocupadaPor,
-  ocupada,
+  ocupadoPor,
+  ocupado,
 }: {
   espacio: string;
-  ocupadaPor: string;
-  ocupada: boolean;
+  ocupadoPor?: string;
+  ocupado: boolean;
 }) => {
   const handleClick = (aula: string) => {
     fetch(`${config.baseUrl}/api/llaves`, {
@@ -36,25 +36,25 @@ const TarjetaParaCadaAula = ({
   };
 
   return (
-    <Card className={`${ocupada ? "bg-gray-200" : ""}`}>
+    <Card className={`${ocupado ? "bg-gray-200" : ""}`}>
       <div className="relative h-40">
         <Image
           src={"https://picsum.photos/300/200?random=" + espacio}
           alt={`Imagen del aula ${espacio}`}
-          className={`object-cover ${ocupada ? "filter grayscale" : ""}`}
+          className={`object-cover ${ocupado ? "filter grayscale" : ""}`}
           fill
         />
       </div>
       <CardHeader>
         <CardTitle className="text-center text-xl">{espacio}</CardTitle>
         <CardDescription className="text-center">
-          {ocupada ? `Ocupada por ${ocupadaPor}` : "Disponible"}
+          {ocupado ? `Ocupada por ${ocupadoPor}` : "Disponible"}
         </CardDescription>
       </CardHeader>
       <CardContent className="flex row justify-stretch space-x-4">
-        {ocupada ? (
+        {ocupado ? (
           <>
-            <Button className="w-full bg-gray-400" disabled={!ocupada}>
+            <Button className="w-full bg-gray-400">
               Mandale un mensajito
               <MessageCircle className="h-4 w-4 ml-2" />
             </Button>
@@ -62,7 +62,7 @@ const TarjetaParaCadaAula = ({
         ) : (
           <Button
             className="w-full"
-            disabled={ocupada}
+            disabled={ocupado}
             onClick={() => handleClick(espacio)}
           >
             Solicitar Llave <Key className="h-4 w-4 ml-2" />
@@ -73,4 +73,4 @@ const TarjetaParaCadaAula = ({
   );
 };
 
-export default TarjetaParaCadaAula;
+export default TarjetaParaCadaEspacio;

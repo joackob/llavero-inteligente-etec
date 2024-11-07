@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export const tratarExcepciones = (excepcion: unknown): NextResponse => {
   try {
     return (excepcion as Excepcion).brindarUnaRespuestaAdecuada();
-  } catch {
+  } catch (errorInexperado) {
     const excepcionDesconocida = new Excepcion({
       codigoHttp: 500,
       mensaje: "Algo inesperado ocurrio con el servicio",

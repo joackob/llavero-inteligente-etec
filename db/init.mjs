@@ -2,9 +2,8 @@
 import { PrismaClient } from "@prisma/client";
 
 (async () => {
-  const client = new PrismaClient();
-  await client.$connect();
-  const db = client;
+  const db = new PrismaClient();
+  await db.$connect();
   try {
     await db.llaves.createMany({
       data: [

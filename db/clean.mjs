@@ -1,6 +1,8 @@
-import db from "@/db";
+import { PriismaClient } from "@prisma/client";
 
 (async () => {
+  const db = new PriismaClient();
+  await db.$connect();
   try {
     await db.llaves.deleteMany();
   } finally {

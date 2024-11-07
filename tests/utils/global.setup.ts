@@ -5,7 +5,8 @@ import limpiarBaseDeDatos from "./global.teardown";
 
 export const inicializarBaseDeDatos = async () => {
   try {
-    await db.llaves.create({ data: { espacio: "213", ocupada: false } });
+    // una llave ocupada, debe tener un ocupante
+    // await db.llaves.create({ data: { espacio: "213", ocupado: true } });
     await db.usuarios.create({
       data: {
         email: "docente@etec.uba.ar",
