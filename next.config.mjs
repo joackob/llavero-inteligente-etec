@@ -10,6 +10,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "placehold.co",
       },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",  // Aquí agregas tu dominio Firebase
+      },
     ],
   },
 };

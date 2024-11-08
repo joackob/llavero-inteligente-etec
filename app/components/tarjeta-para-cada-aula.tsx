@@ -13,10 +13,12 @@ const TarjetaParaCadaEspacio = ({
   espacio,
   ocupadoPor,
   ocupado,
+  imageUrl
 }: {
   espacio: string;
   ocupadoPor?: string;
   ocupado: boolean;
+  imageUrl: string 
 }) => {
   const handleClick = (aula: string) => {
     fetch(`${config.baseUrl}/api/llaves`, {
@@ -39,7 +41,7 @@ const TarjetaParaCadaEspacio = ({
     <Card className={`${ocupado ? "bg-gray-200" : ""}`}>
       <div className="relative h-40">
         <Image
-          src={"https://picsum.photos/300/200?random=" + espacio}
+          src={imageUrl + espacio}
           alt={`Imagen del aula ${espacio}`}
           className={`object-cover ${ocupado ? "filter grayscale" : ""}`}
           fill
