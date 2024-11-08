@@ -23,7 +23,7 @@ export class Excepcion {
   brindarUnaRespuestaAdecuada(): NextResponse {
     return NextResponse.json(
       { mensaje: this.propiedades.mensaje },
-      { status: this.propiedades.codigoHttp }
+      { status: this.propiedades.codigoHttp },
     );
   }
 }
@@ -46,7 +46,16 @@ export class SolicitudSinCredencialesCorrespondientes extends Excepcion {
   }
 }
 
-export class UsuarioNoRegistrado extends Excepcion {
+export class EspacioOcupado extends Excepcion {
+  constructor(mensaje: string) {
+    super({
+      codigoHttp: 423,
+      mensaje: mensaje,
+    });
+  }
+}
+
+export class RegistroNoEncontradoOInexistente extends Excepcion {
   constructor(mensaje: string) {
     super({
       codigoHttp: 404,

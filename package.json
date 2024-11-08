@@ -12,7 +12,9 @@
     "tests:watch": "bun test --watch **/*.test.ts",
     "create:test:e2e": "bunx playwright codegen",
     "lint": "next lint",
-    "generate:db": "bunx prisma generate"
+    "generate:db": "bunx prisma generate",
+    "migrate:dev:db": "bunx prisma migrate dev --name dev",
+    "migrate:deploy:db": "bunx prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
