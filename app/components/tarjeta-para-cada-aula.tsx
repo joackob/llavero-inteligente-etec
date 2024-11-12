@@ -13,15 +13,15 @@ const TarjetaParaCadaEspacio = ({
   espacio,
   ocupadoPor,
   ocupado,
-  imageUrl
+  imageUrl,
 }: {
   espacio: string;
   ocupadoPor?: string;
   ocupado: boolean;
-  imageUrl: string 
+  imageUrl: string;
 }) => {
   const handleClick = (aula: string) => {
-    fetch(`${config.baseUrl}/api/llaves`, {
+    fetch(`${config.BASE_URL}/api/llaves`, {
       method: "POST", // Cambia a POST si envías un cuerpo
       headers: {
         "Content-Type": "application/json",

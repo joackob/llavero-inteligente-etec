@@ -13,13 +13,13 @@ export const useEspacios = () => {
   const obtenerInformacionSobreQuienesOcupanLosEspacios =
     async (): Promise<any> => {
       try {
-        const response = await fetch(`${config.apiUrl}/espacios`);
+        const response = await fetch(`${config.API_URL}/espacios`);
         const data = await response.json();
         return data;
       } catch (error) {
         console.error(
           "Error al obtener la información de los espacios: ",
-          error
+          error,
         );
         setEstado("huboUnProblema");
       }
@@ -66,7 +66,7 @@ const EsquemaParaLosEspaciosDelColegio = z.object({
           email: z.string().email(),
         })
         .optional(),
-    })
+    }),
   ),
 });
 

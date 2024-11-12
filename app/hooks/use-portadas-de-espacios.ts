@@ -3,17 +3,16 @@ import { storage } from "../lib/firebaseClient";
 import { useEffect, useState } from "react";
 
 export const usePortadasDeEspacios = () => {
-  const [imageUrls, setImageUrls] = useState([]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [loading, setLoading] = useState(true); // Estado de carga
-  const [error, setError] = useState(null); // Estado de error
+  const [error, setError] = useState<string>(""); // Estado de error
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
         // 1. Verificar que la referencia al bucket es correcta
-        const listRef = ref(storage, 'llavero-inteligente/');
+        const listRef = ref(storage, "llavero-inteligente/");
         const response = await listAll(listRef);
-
 
         // 2. Verificar si 'items' está presente en la respuesta
         if (!response.items || response.items.length === 0) {
@@ -27,7 +26,7 @@ export const usePortadasDeEspacios = () => {
           response.items.map(async (item) => {
             const url = await getDownloadURL(item);
             return url;
-          })
+          }),
         );
 
         setImageUrls(urls);
@@ -49,6 +48,6 @@ export const usePortadasDeEspacios = () => {
   return {
     imageUrls,
     loading,
-    error
+    error,
   };
 };
