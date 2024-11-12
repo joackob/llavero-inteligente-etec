@@ -1,7 +1,7 @@
 import mqtt from "mqtt";
-
+import {config} from "@/config"
 const mqttClientSingleton = () => {
-  return mqtt.connect("mqtt://10.9.120.49:1883");
+  return mqtt.connect(config.MQTT_URL);
 };
 
 declare const globalThis: {

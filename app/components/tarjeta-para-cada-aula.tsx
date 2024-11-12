@@ -21,7 +21,7 @@ const TarjetaParaCadaEspacio = ({
   imageUrl: string;
 }) => {
   const handleClick = (aula: string) => {
-    fetch(`${config.BASE_URL}/api/llaves`, {
+    fetch(`${config.BASE_URL}/api/llaves/solicitar`, {
       method: "POST", // Cambia a POST si envías un cuerpo
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const TarjetaParaCadaEspacio = ({
     <Card className={`${ocupado ? "bg-gray-200" : ""}`}>
       <div className="relative h-40">
         <Image
-          src={imageUrl + espacio}
+          src={imageUrl}
           alt={`Imagen del aula ${espacio}`}
           className={`object-cover ${ocupado ? "filter grayscale" : ""}`}
           fill
