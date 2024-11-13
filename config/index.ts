@@ -21,8 +21,8 @@ const obtenerConfiguracionATravesDeLosParametros =
       }));
       console.table(advertencias);
       return {
-        API_URL: "http://10.9.121.238:3001/api",
-        BASE_URL: "http://10.9.121.238:3001",
+        API_URL: "http://localhost:3000/api",
+        BASE_URL: "http://localhost:3000",
         MQTT_URL: "mqtt://localhost:3000",
         DATABASE_URL: "file:test.db",
         JWT_SECRET: "jwt_secret",

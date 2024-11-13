@@ -2,28 +2,37 @@
 import { PrismaClient } from "@prisma/client";
 
 (async () => {
-  const db = new PrismaClient();
-  await db.$connect();
   try {
-    await db.llaves.createMany({
-      data: [
-        { espacio: "aula 213" },
-        { espacio: "aula 214" },
-        { espacio: "aula 314" },
-        { espacio: "aula 313" },
-        { espacio: "aula 205" },
-        { espacio: "aula 204" },
-        { espacio: "aula 104" },
-        { espacio: "aula 105" },
-        { espacio: "aula 301" },
-        { espacio: "aula 302" },
-        { espacio: "aula 303" },
-      ],
-    });
-    console.log("Base de datos inicializada");
+    const db = new PrismaClient();
+    await db.$connect();
+    try {
+      await db.llaves.createMany({
+        data: [
+          { espacio: "aula 213" },
+          { espacio: "aula 214" },
+          { espacio: "aula 314" },
+          { espacio: "aula 313" },
+          { espacio: "aula 205" },
+          { espacio: "aula 204" },
+          { espacio: "aula 104" },
+          { espacio: "aula 105" },
+          { espacio: "aula 301" },
+          { espacio: "aula 302" },
+          { espacio: "aula 303" },
+        ],
+      });
+      console.log("\nBase de datos inicializada\n");
+    } catch (error) {
+      if (error instanceof PrismaClient.PrismaClientKnownRequestError) {
+        console.error(`\n${error.message}\n`);
+      }
+      if (error instanceof PrismaClient.PrismaClientUnknownRequestError) {
+        console.error("\nhubo un error al inicializar la base de datos\n");
+      }
+    } finally {
+      await db.$disconnect();
+    }
   } catch (error) {
-    console.log("hubo un error al inicializar la base de datos");
-  } finally {
-    await db.$disconnect();
+    console.error("\nError al conectar con la base de datos\n");
   }
 })();

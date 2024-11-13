@@ -45,6 +45,8 @@ const TarjetaParaCadaEspacio = ({
           alt={`Imagen del aula ${espacio}`}
           className={`object-cover ${ocupado ? "filter grayscale" : ""}`}
           fill
+          priority
+          sizes="100%"
         />
       </div>
       <CardHeader>

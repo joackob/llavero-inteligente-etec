@@ -5,7 +5,7 @@ import TableroDeTarjetasParaAulas from "./components/tablero-de-tarjetas-para-au
 import { useEspacios } from "./hooks/use-espacios";
 import { usePortadasDeEspacios } from "./hooks/use-portadas-de-espacios"; // Asegúrate de importar el hook
 import MensajeDeAlerta from "./components/mensaje-de-alerta";
-import BarraDeProgreso from "./components/barra-de-progreso";
+import EsqueletoParaLasTarjetasDeCarga from "./components/esqueleto-para-las-tarjetas-de-carga";
 
 export default function Page() {
   const espacios = useEspacios();
@@ -22,7 +22,7 @@ export default function Page() {
 
   return (
     <>
-      {espacios.descargaEnProceso() && <BarraDeProgreso />}
+      {espacios.descargaEnProceso() && <EsqueletoParaLasTarjetasDeCarga />}
       {espacios.huboUnProblema() && <MensajeDeAlerta />}
       <TableroDeTarjetasParaAulas>
         {espacios.descargaFinalizada() &&
@@ -32,8 +32,8 @@ export default function Page() {
                 key={aula.id}
                 espacio={aula.espacio}
                 ocupado={aula.ocupado}
-                ocupadoPor={`${aula.ocupante?.nombre} ${aula.ocupante?.apellido}`} 
-                imageUrl={"https://picsum.photos/200/300"}                
+                ocupadoPor={`${aula.ocupante?.nombre} ${aula.ocupante?.apellido}`}
+                imageUrl={"https://picsum.photos/200/300"}
                 // imageUrl={imageUrls[id] || '/path/to/default/image.jpg'} // Usa imagen descargada o una imagen por defecto
               />
             );
