@@ -40,26 +40,18 @@ const obtenerConfiguracionATravesDeLosParametros =
   };
 
 const EsquemaParaLosParametrosDeConfiguracionDeLaApp = z.object({
-  API_URL: z.string({ message: "API_URL es requerido" }),
-  BASE_URL: z.string({ message: "BASE_URL es requerido" }),
-  MQTT_URL: z.string({ message: "MQTT_URL es requerido" }),
-  DATABASE_URL: z.string({ message: "DATABASE_URL es requerido" }),
-  JWT_SECRET: z.string({ message: "JWT_SECRET es requerido" }),
-  NODE_ENV: z.string({ message: "NODE_ENV es requerido" }),
-  CI: z.string({ message: "CI es requerido" }),
-  FIREBASE_API_KEY: z.string({ message: "FIREBASE_API_KEY es requerido" }),
-  FIREBASE_AUTH_DOMAIN: z.string({
-    message: "FIREBASE_AUTH_DOMAIN es requerido",
-  }),
-  FIREBASE_PROJECT_ID: z.string({
-    message: "FIREBASE_PROJECT_ID es requerido",
-  }),
-  FIREBASE_STORAGE_BUCKET: z.string({
-    message: "FIREBASE_STORAGE_BUCKET es requerido",
-  }),
-  FIREBASE_MESSAGING_SENDER_ID: z.string({
-    message: "FIREBASE_MESSAGING_SENDER_ID es requerido",
-  }),
+  API_URL: z.string(),
+  BASE_URL: z.string(),
+  MQTT_URL: z.string(),
+  DATABASE_URL: z.string(),
+  JWT_SECRET: z.string(),
+  NODE_ENV: z.string(),
+  CI: z.string(),
+  FIREBASE_API_KEY: z.string(),
+  FIREBASE_AUTH_DOMAIN: z.string(),
+  FIREBASE_PROJECT_ID: z.string(),
+  FIREBASE_STORAGE_BUCKET: z.string(),
+  FIREBASE_MESSAGING_SENDER_ID: z.string(),
   FIREBASE_APP_ID: z.string(),
   FIREBASE_MEASUREMENT_ID: z.string(),
 });

@@ -1,87 +1,76 @@
-//Incluir bibliotecas
-#include <WiFi.h>  //
-#include <PubSubClient.h>
+// settings
+#include "mqtt_config.h"
 
+// src
+#include "./src/indicator.h"
+#include "./src/lock.h"
+#include "./src/logger.h"
+#include "./src/mqtt_socket.h"
 
-// crear constantes con valores de configuracion(p. ej. contraseña de WiFi)
-const char* WIFI_SSID = "ETEC-UBA";    // SSID( nombre de la red WiFi)
-const char* CLAVE = "ETEC-alumnos@UBA";            // Contraseña de wifi
-const char* MQTT_BROKER = "10.9.121.240";  // MQTT Broker
-const int PUERTO_MQTT = 1883;              //Puerto MQTT
-const char* MQTT_TOPIC = "topic-prueba";   //Topic sin "#" y
-//crear objetos para gestionar las conexiones
+MQTTSocket socket;
+LedIndicator indicator;
+Lock lock;
+Logger logger;
 
-WiFiClient Cliente_esp;
-PubSubClient client(Cliente_esp);
-
-// callback sirve para manejar y responder a los mensajes que llegan al dispositivo desde un servidor MQTT (el broker)
-//Y ESTE BLOQUE DE CODIGO SE EJECUTA CUANDO LA PLACA RESIVE UN MSJ POR MQTT
-void callback(char* topic, byte* message, unsigned int length) {
- // Imprimir el mensaje recibido en el topic
- Serial.print("Mensaje recibido en el topic: ");
- Serial.print(topic);
- Serial.print(".Mensaje: ");
- // Crear una cadena de caracteres (String) para almacenar el mensaje
- String mensaje;
-
-
-
-
- // Recorrer cada byte del mensaje recibido
- for (int i = 0; i < length; i++) {
-   // Imprimir cada caracter del mensaje en el monitor serial
-   Serial.print((char)message[i]);
-   // Concatenar cada caracter al mensaje String
-   mensaje += (char)message[i];
- }
-
-
- // Imprimir un salto de línea para separar el mensaje recibido
- Serial.println();
-
-
-}
 void setup() {
- //  Iniciar puerto serie (para enviar mensajes informando el estado de la conexión de WiFi, los mensajes que recibimos por MQTT, etc.)
- Serial.begin(115200);
- WiFi.begin(WIFI_SSID, CLAVE);
- Serial.print("Intentando conectar a wifi");
+  logger.begin();
+  lock.begin();
+  indicator.begin();
 
-
-
-
- while (WiFi.status() != WL_CONNECTED) {
-   Serial.print(".");
-   delay(500);
- }
- Serial.println("Ya se conecto a WiFi");
- Serial.println(WiFi.localIP());
-
-
-
-
- client.setServer(MQTT_BROKER, PUERTO_MQTT);
- // ACA LE DIGO QUIEN ERA EL CALLBACK
- client.setCallback(callback);
-
-
- // Conectarse al broker MQTT
- while (!client.connected()) {
-   Serial.println("conectando a MQTT...");
-   if (client.connect("ESP32Client")) {
-     Serial.println("conectado");
-     client.subscribe(MQTT_TOPIC);                   // me suscribo al topic
-     client.publish(MQTT_TOPIC, "ESP32 conectado");  // publicando mensaje de prueba en el topic
-
-
-   } else {
-     Serial.print("Fallo en el estado");
-     Serial.print(client.state());
-     delay(2000);
-   }
- }
+  socket.onWifiConnecting(logSSIDAndSignalStatusConnectingWifi)
+      .onWifiConnected(logIPAndSignalStatusConnectedWifi)
+      .onMQTTConnecting(logAndSignalStatusConnectingBroker)
+      .onMQTTDisconnected(logAndSignalStatusDisconnectedBroker)
+      .onMQTTConnected(logAndSignalStatusConnectedBroker)
+      .onMessage(attendToRequest)
+      .build();
 }
-void loop() 
-{
- client.loop();
+
+void loop() { socket.loop(); }
+
+void logSSIDAndSignalStatusConnectingWifi(const char *wifi_ssid) {
+  logger.log(String("Connecting to wifi: ") + wifi_ssid);
+  indicator.blink();
+}
+
+void logIPAndSignalStatusConnectedWifi(const char *local_ip) {
+  logger.log(String("Connected to wifi with IP: ") + local_ip);
+  indicator.off();
+}
+
+void logAndSignalStatusConnectingBroker() {
+  logger.log("Connecting to MQTT Broker");
+  indicator.blink();
+}
+
+void logAndSignalStatusDisconnectedBroker(int mqtt_error_code) {
+  logger.log(String("Device disconnected with error code: ") +
+             String(mqtt_error_code) + ". Reconnecting in 2seg...");
+  indicator.on();
+  delay(2000);
+}
+
+void logAndSignalStatusConnectedBroker(const char *broker_host,
+                                       uint16_t broker_ip) {
+  logger.log(String("Connected to MQTT Broker: ") + broker_host + ":" +
+             String(broker_ip));
+  indicator.off();
+}
+
+void attendToRequest(char *t, uint8_t *m, unsigned int l) {
+  String topic = String(t);
+  String message;
+  for (int i = 0; i < l; i++) {
+    message += (char)m[i];
+  }
+
+  logger.log(String("Message received: ") + topic + ": " + message);
+
+  if (message == MQTT_MSG_TO_OPEN_LOCKER) {
+    lock.open();
+    logger.log("Locker opened");
+  } else if (message == MQTT_MSG_TO_CLOSE_LOCKER) {
+    lock.close();
+    logger.log("Locker closed");
+  }
 }
