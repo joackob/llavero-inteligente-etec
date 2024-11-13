@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start",
-    "build": "bun ./db/init.mjs && next build",
-    "build:node": "node ./db/init.mjs && next build",
+    "build": " next build",
     "tests:e2e": "next build && bunx playwright test",
     "tests:e2e:without-build": "bunx playwright test",
     "tests": "bun test **/*.test.ts",
@@ -15,7 +14,8 @@
     "lint": "next lint",
     "generate:db": "bunx prisma generate",
     "migrate:dev:db": "bunx prisma migrate dev --name dev",
-    "migrate:deploy:db": "bunx prisma migrate deploy"
+    "migrate:deploy:db": "bunx prisma migrate deploy",
+    "init:db": "node ./db/init.mjs"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
