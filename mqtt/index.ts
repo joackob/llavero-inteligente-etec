@@ -1,5 +1,5 @@
 import mqtt from "mqtt";
-import {config} from "@/config"
+import { config } from "@/config"
 const mqttClientSingleton = () => {
   return mqtt.connect(config.MQTT_URL);
 };

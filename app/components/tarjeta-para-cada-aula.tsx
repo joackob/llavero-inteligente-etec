@@ -21,6 +21,7 @@ const TarjetaParaCadaEspacio = ({
   imageUrl: string;
 }) => {
   const handleClick = (aula: string) => {
+    console.table(config)
     fetch(`${config.BASE_URL}/api/llaves/solicitar`, {
       method: "POST", // Cambia a POST si envías un cuerpo
       headers: {
