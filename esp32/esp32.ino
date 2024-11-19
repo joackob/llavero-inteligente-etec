@@ -2,75 +2,80 @@
 #include "mqtt_config.h"
 
 // src
-#include "./src/indicator.h"
-#include "./src/lock.h"
-#include "./src/logger.h"
-#include "./src/mqtt_socket.h"
+#include "cerradura.h"
+#include "conexion_mqtt.h"
+#include "conexion_wifi.h"
+#include "indicador_led.h"
+#include "logger.h"
 
-MQTTSocket socket;
-LedIndicator indicator;
-Lock lock;
+
+
+IndicadorLed indicadorLed;
+Cerradura cerradura;
 Logger logger;
+ConexionWiFi wifi;
+ConexionMQTT mqtt;
 
 void setup() {
-  logger.begin();
-  lock.begin();
-  indicator.begin();
+  logger.configurar();
+  cerradura.configurar();
+  indicadorLed.configurar();
+  wifi.alIntentarConectarse = informarLaIntencionDeConectarseALaRedWifi;
+  wifi.alConectarse = informarSobreLaIPAsignadaYConfigurarConexionMQTT;
+  mqtt.alIntentarConectarse = informarLaIntencionDeConectarseAlBroker;
+  mqtt.alConectarse = informarLaConexionConElBroker;
+  mqtt.alDesconectarse = informarLaDesconexionDelBroker;
+  mqtt.alRecibirMensaje = atenderLaConsulta;
 
-  socket.onWifiConnecting(logSSIDAndSignalStatusConnectingWifi)
-      .onWifiConnected(logIPAndSignalStatusConnectedWifi)
-      .onMQTTConnecting(logAndSignalStatusConnectingBroker)
-      .onMQTTDisconnected(logAndSignalStatusDisconnectedBroker)
-      .onMQTTConnected(logAndSignalStatusConnectedBroker)
-      .onMessage(attendToRequest)
-      .build();
+  wifi.intentarConectarseALaRed();
 }
 
-void loop() { socket.loop(); }
-
-void logSSIDAndSignalStatusConnectingWifi(const char *wifi_ssid) {
-  logger.log(String("Connecting to wifi: ") + wifi_ssid);
-  indicator.blink();
+void loop() {
+  mqtt.aguardarMensajes();
 }
 
-void logIPAndSignalStatusConnectedWifi(const char *local_ip) {
-  logger.log(String("Connected to wifi with IP: ") + local_ip);
-  indicator.off();
+void informarLaIntencionDeConectarseALaRedWifi(const char *wifi_ssid) {
+  logger.informar(String("Conectandose a la red: ") + wifi_ssid);
+  indicadorLed.parpadear();
 }
 
-void logAndSignalStatusConnectingBroker() {
-  logger.log("Connecting to MQTT Broker");
-  indicator.blink();
+void informarSobreLaIPAsignadaYConfigurarConexionMQTT(
+  WiFiClient &conexion_wifi) {
+  logger.informar("Conectado a la red wifi");
+  indicadorLed.apagar();
+  mqtt.configurarConexionAlBroker(conexion_wifi);
 }
 
-void logAndSignalStatusDisconnectedBroker(int mqtt_error_code) {
-  logger.log(String("Device disconnected with error code: ") +
-             String(mqtt_error_code) + ". Reconnecting in 2seg...");
-  indicator.on();
+void informarLaIntencionDeConectarseAlBroker() {
+  logger.informar("Conectandose al broker MQTT...");
+  indicadorLed.parpadear();
+}
+
+void informarLaConexionConElBroker() {
+  logger.informar(String("Conectado al broker MQTT"));
+  indicadorLed.apagar();
+}
+
+void informarLaDesconexionDelBroker(int codigo_de_error) {
+  logger.informar(String("Dispositivo desconectado, codigo de error:") + String(codigo_de_error) + ". Reconectando en 2 segundos...");
+  indicadorLed.parpadear();
   delay(2000);
 }
 
-void logAndSignalStatusConnectedBroker(const char *broker_host,
-                                       uint16_t broker_ip) {
-  logger.log(String("Connected to MQTT Broker: ") + broker_host + ":" +
-             String(broker_ip));
-  indicator.off();
-}
-
-void attendToRequest(char *t, uint8_t *m, unsigned int l) {
+void atenderLaConsulta(char *t, uint8_t *m, unsigned int l) {
   String topic = String(t);
   String message;
   for (int i = 0; i < l; i++) {
     message += (char)m[i];
   }
 
-  logger.log(String("Message received: ") + topic + ": " + message);
+  logger.informar(String("Message received: ") + topic + ": " + message);
 
   if (message == MQTT_MSG_TO_OPEN_LOCKER) {
-    lock.open();
-    logger.log("Locker opened");
+    cerradura.abrir();
+    logger.informar("Locker opened");
   } else if (message == MQTT_MSG_TO_CLOSE_LOCKER) {
-    lock.close();
-    logger.log("Locker closed");
+    cerradura.cerrar();
+    logger.informar("Locker closed");
   }
 }

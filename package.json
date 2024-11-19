@@ -15,7 +15,8 @@
     "generate:db": "bunx prisma generate",
     "migrate:dev:db": "bunx prisma migrate dev --name dev",
     "migrate:deploy:db": "bunx prisma migrate deploy",
-    "init:db": "node ./db/init.mjs"
+    "init:db": "node ./db/init.mjs",
+    "build:esp32": "cd esp32 && arduino-cli compile"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
