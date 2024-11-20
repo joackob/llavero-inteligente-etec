@@ -43,7 +43,7 @@ export default function Page() {
                 espacio={aula.espacio}
                 ocupado={aula.ocupado}
                 ocupadoPor={`${aula.ocupante?.nombre} ${aula.ocupante?.apellido}`}
-                imageUrl={urls[id] || "/path/to/default/image.jpg"} // Usa imagen descargada o una imagen por defecto
+                imageUrl={aula.urls} // Usa imagen descargada o una imagen por defecto
               />
             );
           })}

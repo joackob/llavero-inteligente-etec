@@ -19,7 +19,7 @@ export const useEspacios = () => {
       } catch (error) {
         console.error(
           "Error al obtener la información de los espacios: ",
-          error,
+          error
         );
         setEstado("huboUnProblema");
       }
@@ -66,7 +66,8 @@ const EsquemaParaLosEspaciosDelColegio = z.object({
           email: z.string().email(),
         })
         .optional(),
-    }),
+      urls: z.string(),
+    })
   ),
 });
 
