@@ -21,9 +21,9 @@ const obtenerConfiguracionATravesDeLosParametros =
       }));
       console.table(advertencias);
       return {
-        API_URL: "http://10.9.121.44:3000/api",
-        BASE_URL: "http://10.9.121.44:3000",
-        MQTT_URL: "mqtt://10.9.121.44",
+        API_URL: "http://10.9.120.101:3000/api",
+        BASE_URL: "http://10.9.120.101",
+        MQTT_URL: "mqtt://10.9.120.101",
         DATABASE_URL: "file:test.db",
         JWT_SECRET: "jwt_secret",
         NODE_ENV: "DEV",
