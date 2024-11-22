@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { intentarSolicitarLlaves } from "./solicitar/controllers/intentarSolicitarLlaves";
-import { base64url } from "jose";
-
-export const POST = async (solicitud: NextRequest): Promise<NextResponse> => {
-  return await intentarSolicitarLlaves(solicitud);
+import { reservarLlave } from "./reservar-llave";
+export const PUT = async (solicitud: NextRequest): Promise<NextResponse> => {
+  const {espacio}= await solicitud.json() 
+  reservarLlave(espacio)
+  return NextResponse.json({mensaje: "reserve la llave"})
 };
 
 
