@@ -21,6 +21,7 @@ export const obtenerInformacionSobreQuienesOcupanLosEspacios = async () => {
             },
           },
         },
+        urls: true,
       },
     });
 
@@ -30,6 +31,7 @@ export const obtenerInformacionSobreQuienesOcupanLosEspacios = async () => {
         espacio: espacio.espacio,
         ocupado: espacio.ocupado,
         ocupante: espacio.prestamos.at(0)?.usuario,
+        urls: espacio.urls,
       };
     });
   } catch (error) {

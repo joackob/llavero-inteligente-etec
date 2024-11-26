@@ -13,7 +13,7 @@ const obtenerConfiguracionATravesDeLosParametros =
       return EsquemaParaLosParametrosDeConfiguracionDeLaApp.parse(process.env);
     } catch (error) {
       console.log(
-        "Advertencia: process.env no esta disponible en el cliente. Se retornara un valor por defecto.",
+        "Advertencia: process.env no esta disponible en el cliente. Se retornara un valor por defecto."
       );
       const advertencias = (error as ZodError).issues.map((issue) => ({
         advertencia: issue.message,
@@ -21,9 +21,9 @@ const obtenerConfiguracionATravesDeLosParametros =
       }));
       console.table(advertencias);
       return {
-        API_URL: "http://10.9.121.196:3000/api",
-        BASE_URL: "http://10.9.121.196:3000",
-        MQTT_URL: "mqtt://10.9.120.180",
+        API_URL: "http://10.9.120.196:3001/api",
+        BASE_URL: "http://10.9.120.196:3001",
+        MQTT_URL: "mqtt://10.9.120.196",
         DATABASE_URL: "file:test.db",
         JWT_SECRET: "jwt_secret",
         NODE_ENV: "DEV",
