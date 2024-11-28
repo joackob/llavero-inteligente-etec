@@ -4,7 +4,7 @@ import TarjetaFormularioParaInicioDeSesion from "./components/tarjeta-para-formu
 const Page = () => {
   return (
     <TarjetaFormularioParaInicioDeSesion>
-      <FormularioParaInicioDeSesion />;
+      <FormularioParaInicioDeSesion />
     </TarjetaFormularioParaInicioDeSesion>
   );
 };
