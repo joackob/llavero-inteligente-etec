@@ -27,10 +27,10 @@ void setup() {
       .alDesconectarse(informarAlUsuarioElEstadoDeLaConexionAlBroker)
       .alRecibirUnMensaje(informarAlUsuarioLaRecepcionDeUnMensajePorMQTT)
       .enlazarConConexionWiFi(conexion_wifi)
-      .intentarConectarseAlBroker();
+      .configurar();
 }
 
-void loop() { conexion_mqtt.esperarMensajes(); }
+void loop() { conexion_mqtt.intentarConectarseAlBroker(); }
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
     InformacionSobreElEstadoDeLaConexionWiFi info) {

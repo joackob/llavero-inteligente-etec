@@ -1,33 +1,63 @@
 #include "conexion_mqtt.h"
 
-#include "../configuracion_mqtt/configuracion_mqtt.h"
+void limpiarBuffer(char *);
+void establecerTopicSiElMensajeEsValido(char *, uint8_t *, unsigned int,
+                                        char *);
+void establercerContenidoSiElMensajeEsValido(char *, uint8_t *, unsigned int,
+                                             char *);
 
-#define MQTT_CLIENT_ID "ESP32"
-#define MQTT_MAX_MSG_SIZE 32
-
-ConexionMQTT &ConexionMQTT::intentarConectarseAlBroker() {
+ConexionMQTT &ConexionMQTT::configurar() {
   this->mqtt.setServer(MQTT_HOST, MQTT_PORT);
   this->mqtt.setCallback([this](char *t, uint8_t *m, unsigned int lm) {
-    const char *topic = lm >= MQTT_MAX_MSG_SIZE ? "error" : t;
+    char topic[MQTT_MAX_MSG_SIZE];
     char contenido[MQTT_MAX_MSG_SIZE];
-    unsigned int longitud_del_mensaje =
-        lm >= MQTT_MAX_MSG_SIZE ? MQTT_MAX_MSG_SIZE - 1 : lm;
-    strncpy(contenido, (char *)m, longitud_del_mensaje);
-    contenido[longitud_del_mensaje] = '\0';
-    this->accionAlRecibirMensaje({topic, contenido});
+    limpiarBuffer(topic);
+    limpiarBuffer(contenido);
+    establecerTopicSiElMensajeEsValido(t, m, lm, topic);
+    establercerContenidoSiElMensajeEsValido(t, m, lm, contenido);
+    this->invocarAccionAlRecibirMensaje({topic, contenido});
   });
   return *this;
 };
 
-ConexionMQTT &ConexionMQTT::esperarMensajes() {
-  while (!this->mqtt.connected()) {
-    if (this->mqtt.connect(MQTT_CLIENT_ID)) {
-      this->mqtt.subscribe(MQTT_TOPIC);
-      this->accionAlConectarse({this->mqtt.state(), this->mqtt.connected()});
+ConexionMQTT &ConexionMQTT::intentarConectarseAlBroker() {
+  while (!this->estaConectado()) {
+    this->conectar();
+    this->suscribir();
+    if (this->estaConectado()) {
+      this->invocarAccionAlConectarse(
+          {this->mqtt.state(), this->mqtt.connected()});
     } else {
-      this->accionAlDesconectarse({this->mqtt.state(), this->mqtt.connected()});
+      this->invocarAccionAlEstarDesconectado(
+          {this->mqtt.state(), this->mqtt.connected()});
     }
   }
-  this->mqtt.loop();
+  this->iterarEsperandoUnMensajeNuevo();
   return *this;
 };
+
+bool mensajeEsValido(char *t, uint8_t *m, unsigned int lm) {
+  unsigned int lt = strlen(t);
+  return lm < MQTT_MAX_MSG_SIZE && lt < MQTT_MAX_MSG_SIZE && t != nullptr &&
+         m != nullptr;
+}
+
+void establecerTopicSiElMensajeEsValido(char *t, uint8_t *m, unsigned int lm,
+                                        char *topic) {
+  if (!mensajeEsValido(t, m, lm)) {
+    strcpy(topic, "mensaje invalido");
+    return;
+  }
+  strcpy(topic, t);
+}
+
+void establercerContenidoSiElMensajeEsValido(char *t, uint8_t *m,
+                                             unsigned int lm, char *contenido) {
+  if (!mensajeEsValido(t, m, lm)) {
+    strcpy(contenido, "mensaje invalido");
+    return;
+  }
+  strncpy(contenido, (char *)m, lm);
+}
+
+void limpiarBuffer(char *buffer) { memset(buffer, '\0', MQTT_MAX_MSG_SIZE); }

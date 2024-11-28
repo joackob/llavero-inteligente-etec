@@ -3,7 +3,7 @@
 
 #include <WiFi.h>
 
-#include "../configuracion_wifi/configuracion_wifi.h"
+#include "configuracion_wifi.h"
 
 typedef struct {
   const char *ssid;

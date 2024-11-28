@@ -8,6 +8,10 @@
 #include <functional>
 
 #include "conexion_wifi.h"
+#include "configuracion_mqtt.h"
+
+#define MQTT_CLIENT_ID "ESP32"
+#define MQTT_MAX_MSG_SIZE 32
 
 typedef struct {
   const char *topic;
@@ -48,9 +52,26 @@ class ConexionMQTT {
     return *this;
   };
 
+ private:
+  void invocarAccionAlConectarse(
+      InformacionSobreElEstadoDeLaConexionMQTT info) {
+    this->accionAlConectarse(info);
+  };
+  void invocarAccionAlEstarDesconectado(
+      InformacionSobreElEstadoDeLaConexionMQTT info) {
+    this->accionAlDesconectarse(info);
+  };
+  void invocarAccionAlRecibirMensaje(MensajeMQTT mensaje) {
+    this->accionAlRecibirMensaje(mensaje);
+  };
+  void conectar() { this->mqtt.connect(MQTT_CLIENT_ID); };
+  void suscribir() { this->mqtt.subscribe(MQTT_TOPIC); };
+  void iterarEsperandoUnMensajeNuevo() { this->mqtt.loop(); };
+  bool estaConectado() { return this->mqtt.connected(); };
+
  public:
+  ConexionMQTT &configurar();
   ConexionMQTT &intentarConectarseAlBroker();
-  ConexionMQTT &esperarMensajes();
 
  public:
   AccionAlConectarseAlBroker accionAlConectarse;
