@@ -4,26 +4,35 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import axios from "axios";
+import { password } from "bun";
 
 export default function FormularioParaInicioDeSesion() {
-  const [creadenciales, setCredenciales] = useState<{ email: string, contrasena: string }>({
+  const [credenciales, setCredenciales] = useState<{ email: string, contrasena: string }>({
     email: "",
     contrasena: "",
   })
-  const enviarCredenciales: FormEventHandler = (evento) => {
-    evento.preventDefault();
-    console.table(creadenciales);
+  const enviarCredenciales: FormEventHandler = async (evento) => {
+    try {
+      evento.preventDefault();
+      console.table(credenciales);
+      const respuesta =await axios.post("http://localhost:3000/api/usuarios/iniciar-sesion-en-el-sistema", { email: credenciales.email, password: credenciales.contrasena })
+      console.log(respuesta)
+    } catch (error) {
+      console.log(error)
+    }
+ 
   };
   const capturarUsuario: ChangeEventHandler<HTMLInputElement> = (evento) => {
     setCredenciales((credenciales) => ({
       ...credenciales,
-      contrasena: evento.target.value,
+      email: evento.target.value,
     }));
   }
   const capturarContraseña: ChangeEventHandler<HTMLInputElement> = (evento) => {
     setCredenciales((credenciales) => ({
       ...credenciales,
-      email: evento.target.value,
+      contrasena: evento.target.value,
     }));
   }
 
@@ -31,16 +40,16 @@ export default function FormularioParaInicioDeSesion() {
 
   return (
     <Formulario alCompletar={enviarCredenciales}>
-         <Campos
+      <Campos
         alCambiarEmail={capturarUsuario}
         alCambiarContrasena={capturarContraseña}
-        credenciales={creadenciales}
-      />  
+        credenciales={credenciales}
+      />
     </Formulario>
   );
 }
 
-const Formulario = ({ children,alCompletar}: { children: ReactNode, alCompletar: FormEventHandler }) => {
+const Formulario = ({ children, alCompletar }: { children: ReactNode, alCompletar: FormEventHandler }) => {
   return (
     <form onSubmit={alCompletar}>
       <div className="space-y-4">{children}</div>
@@ -50,7 +59,7 @@ const Formulario = ({ children,alCompletar}: { children: ReactNode, alCompletar:
     </form>
   );
 };
-const Campos = ({alCambiarEmail,alCambiarContrasena,credenciales,}: {
+const Campos = ({ alCambiarEmail, alCambiarContrasena, credenciales, }: {
   alCambiarEmail: ChangeEventHandler<HTMLInputElement>;
   alCambiarContrasena: ChangeEventHandler<HTMLInputElement>;
   credenciales: { email: string; contrasena: string };
@@ -107,5 +116,4 @@ const Campos = ({alCambiarEmail,alCambiarContrasena,credenciales,}: {
       </div>
     </>
   );
-}; 
- 
+};

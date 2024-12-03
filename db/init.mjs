@@ -94,34 +94,17 @@ import bcrypt from "bcrypt";
       console.log("\nBase de datos de usuarios inicializada\n");
 
     } catch (error) {
-<<<<<<< HEAD
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         console.error(`\nError conocido: ${error.message}\n`);
       }
       if (error instanceof Prisma.PrismaClientUnknownRequestError) {
         console.error("\nHubo un error desconocido al inicializar la base de datos\n");
       }
-=======
-      console.error("\nError al conectar con la base de datos\n");
-      console.error(error);
-      /*
-      if (error instanceof PrismaClient.PrismaClientKnownRequestError) {
-        console.error(`\n${error.message}\n`);
-      }
-      if (error instanceof PrismaClient.PrismaClientUnknownRequestError) {
-        console.error("\nhubo un error al inicializar la base de datos\n");
-      }*/
->>>>>>> 7d26efcb34911132f4c2cb757f4767b83bed49f6
     } finally {
       await db.$disconnect();
     }
   } catch (error) {
     console.error("\nError al conectar con la base de datos\n");
-<<<<<<< HEAD
     console.table(error)
   } 
-=======
-    console.error(error);
-  }
->>>>>>> 7d26efcb34911132f4c2cb757f4767b83bed49f6
 })();
