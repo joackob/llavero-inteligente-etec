@@ -54,3 +54,5 @@ test.db-journal
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+expendedora-de-llaves/.cache/
+expendedora-de-llaves/compile_commands.json

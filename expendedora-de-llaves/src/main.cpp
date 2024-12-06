@@ -34,10 +34,9 @@ void loop() { conexion_mqtt.intentarConectarseAlBroker(); }
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
     InformacionSobreElEstadoDeLaConexionWiFi info) {
-  const char *informacion = info.conectado
-                                ? "Conectado a la red: "
-                                : "Intentando conectarse a la red WiFi: ";
-  logger.informar(informacion).agregar(info.ssid).concluir();
+  const char *estado = info.conectado ? "Conectado a la red: "
+                                      : "Intentando conectarse a la red WiFi: ";
+  logger.informar(estado).agregar(info.ssid).concluir();
   if (!info.conectado) {
     indicador_led.parpadear();
   }
@@ -45,10 +44,9 @@ void informarAlUsuarioElEstadoDeLaConexionWiFi(
 
 void informarAlUsuarioElEstadoDeLaConexionAlBroker(
     InformacionSobreElEstadoDeLaConexionMQTT info) {
-  const char *informacion = info.conectado
-                                ? "Conectado al broker MQTT"
-                                : "Intentando conectarse al broker MQTT";
-  logger.informar(informacion).concluir();
+  const char *estado = info.conectado ? "Conectado al broker MQTT"
+                                      : "Intentando conectarse al broker MQTT";
+  logger.informar(estado).concluir();
   if (!info.conectado) {
     indicador_led.parpadear();
   } else {
