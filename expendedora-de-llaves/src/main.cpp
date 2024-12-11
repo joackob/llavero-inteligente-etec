@@ -28,6 +28,7 @@ void setup() {
       .alRecibirUnMensaje(informarAlUsuarioLaRecepcionDeUnMensajePorMQTT)
       .enlazarConConexionWiFi(conexion_wifi)
       .configurar();
+
 }
 
 void loop() { conexion_mqtt.intentarConectarseAlBroker(); }
