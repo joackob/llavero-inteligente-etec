@@ -1,11 +1,10 @@
 import mqtt from "mqtt";
-import { config } from "@/config"
+import { config } from "@/config";
 const mqttClientSingleton = () => {
-  return mqtt.connect(config.MQTT_URL,{
-    username: 'santiago',
-    password: 'Espindola1'
+  return mqtt.connect(config.MQTT_URL, {
+    username: "user",
+    password: "pass",
   });
-  
 };
 
 declare const globalThis: {
@@ -13,7 +12,7 @@ declare const globalThis: {
 } & typeof global;
 
 const socketMqtt = globalThis.mqttGlobal ?? mqttClientSingleton();
-  
+
 export default socketMqtt;
 
 if (process.env.NODE_ENV !== "production") globalThis.mqttGlobal = socketMqtt;
