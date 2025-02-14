@@ -16,7 +16,7 @@ export default function FormularioParaInicioDeSesion() {
     try {
       evento.preventDefault();
       console.table(credenciales);
-      const respuesta =await axios.post("http://localhost:3000/api/usuarios/iniciar-sesion-en-el-sistema", { email: credenciales.email, password: credenciales.contrasena })
+      const respuesta =await axios.post("http://localhost:3002/api/usuarios/iniciar-sesion-en-el-sistema", { email: credenciales.email, password: credenciales.contrasena })
       console.log(respuesta)
     } catch (error) {
       console.log(error)
