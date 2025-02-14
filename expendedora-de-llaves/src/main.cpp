@@ -34,7 +34,7 @@ void loop() { conexion_mqtt.intentarConectarseAlBroker(); }
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
     InformacionSobreElEstadoDeLaConexionWiFi info) {
-  const char *estado = info.conectado ? "Conectado a la red: "
+  const char *estado = info.conectado ? " Conectado a la red: "
                                       : "Intentando conectarse a la red WiFi: ";
   logger.informar(estado).agregar(info.ssid).concluir();
   if (!info.conectado) {
@@ -62,4 +62,5 @@ void informarAlUsuarioLaRecepcionDeUnMensajePorMQTT(MensajeMQTT mensaje) {
       .agregar(" Contenido: ")
       .agregar(mensaje.contenido)
       .concluir();
+    
 }
