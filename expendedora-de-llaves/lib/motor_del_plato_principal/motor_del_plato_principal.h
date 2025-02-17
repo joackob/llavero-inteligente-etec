@@ -18,24 +18,12 @@ public:
     ~MotorDelPlatoPrincipal() {};
 
 public:
-    void girar()
-    {
-        analogWrite(PIN_MOTOR_VERDE, VELOCIDAD_RECOMENDADA);
-        digitalWrite(PIN_MOTOR_NARANJA, LOW);
-        digitalWrite(PIN_MOTOR_AZUL, HIGH);
-    }
-
-    void girarEnReversa()
-    {
-        analogWrite(PIN_MOTOR_VERDE, VELOCIDAD_RECOMENDADA);
-        digitalWrite(PIN_MOTOR_NARANJA, HIGH);
-        digitalWrite(PIN_MOTOR_AZUL, LOW);
-    }
-    void detener()
-    {
-        digitalWrite(PIN_MOTOR_NARANJA, LOW);
-        digitalWrite(PIN_MOTOR_AZUL, LOW);
-    }
+    void configurarMotorAzul() {pinMode(PIN_MOTOR_AZUL, OUTPUT); };
+    void configurarMotorVerde() {pinMode(PIN_MOTOR_VERDE, OUTPUT); };
+    void configurarMotorNaranja() {pinMode(PIN_MOTOR_NARANJA, OUTPUT); };   //inline definition
+    void girar();
+    void girarEnReversa();
+    void detener();
 };
 
 #endif

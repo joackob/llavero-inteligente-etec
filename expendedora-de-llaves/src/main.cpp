@@ -4,11 +4,13 @@
 #include "conexion_wifi.h"
 #include "indicador_led.h"
 #include "logger.h"
+#include "motor_del_plato_principal.h"
 
 ConexionMQTT conexion_mqtt;
 ConexionWiFi conexion_wifi;
 IndicadorLed indicador_led;
 Logger logger;
+MotorDelPlatoPrincipal motor;
 
 void informarAlUsuarioLaRecepcionDeUnMensajePorMQTT(MensajeMQTT mensaje);
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
@@ -28,6 +30,10 @@ void setup() {
       .alRecibirUnMensaje(informarAlUsuarioLaRecepcionDeUnMensajePorMQTT)
       .enlazarConConexionWiFi(conexion_wifi)
       .configurar();
+
+  motor.configurarMotorAzul();
+  motor.configurarMotorVerde();
+  motor.configurarMotorNaranja();
 
 }
 
