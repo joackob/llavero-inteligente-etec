@@ -15,6 +15,6 @@ public:
     void aulaRecibida(String aula);
 
 public:
- LCD();
-     LCD();
+    LCD();
+    LCD();
 };
