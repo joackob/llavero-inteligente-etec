@@ -14,6 +14,7 @@ void MotorDelPlatoPrincipal::girarEnReversa()
     digitalWrite(PIN_MOTOR_NARANJA, HIGH);
     digitalWrite(PIN_MOTOR_AZUL, LOW);
 }
+
 void MotorDelPlatoPrincipal::detener()
 {
     digitalWrite(PIN_MOTOR_NARANJA, LOW);
