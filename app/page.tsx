@@ -5,7 +5,8 @@ import { useEspacios } from "./hooks/use-espacios";
 import TarjetaParaCadaEspacio from "./components/tarjeta-para-cada-aula";
 import TableroDeTarjetasParaAulas from "./components/tablero-de-tarjetas-para-aulas";
 import MensajeDeAlerta from "./components/mensaje-de-alerta";
-import BarraDeProgreso from "./components/barra-de-progreso";
+import BarraDeProgreso from "./components/barra-de-progeso";
+import EsqueletoParaLasTarjetasDeCarga from "./components/esqueleto-para-las-tarjetas-de-carga";
 
 export default function Page() {
   const { searchTerm } = useSearch(); // Acceder al término de búsqueda

@@ -9,14 +9,14 @@ export const validarLosDatosDeLaSolicitud = (
 
 const chequearEsquemaDeLaSolicitud = (datos: Readonly<any>) => {
   try {
+    console.log(datos)
     return EsquemaDeUnaSolicitudParaIniciarLaSesionDeUnUsuario.parse(datos);
   } catch (error) {
     const primerErrorEncontrado = (error as ZodError).issues.at(0);
     throw new SolicitudMalPlanteada(
       `El campo ${primerErrorEncontrado?.path.at(
         0
-      )} no se encuentra en el formato correcto: ${
-        primerErrorEncontrado?.message
+      )} no se encuentra en el formato correcto: ${primerErrorEncontrado?.message
       }`
     );
   }
@@ -27,9 +27,7 @@ export const EsquemaDeUnaSolicitudParaIniciarLaSesionDeUnUsuario = z.object(
     email: z
       .string()
       .email("Debe existir un email: Por ejemplo jdoe@ejemplo.com"),
-    password: z
-      .string()
-      .min(8, "La contraseña debe tener al menos 8 caracteres"),
+    password: z.string()
   },
   {
     message:

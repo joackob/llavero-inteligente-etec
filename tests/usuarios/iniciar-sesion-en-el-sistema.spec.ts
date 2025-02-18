@@ -8,7 +8,7 @@ test.describe.skip(
     }) => {
       await page.goto("http://localhost:3001/");
       await page.getByRole("button", { name: "Iniciar Sesión" }).click();
-      await page.getByPlaceholder("tu@ejemplo.com").fill("docente@etec.uba.ar");
+      await page.getByPlaceholder("tu@ejemplo.com").fill("docente@etec.uba.ar");  
       await page.getByPlaceholder("••••••••").fill("passtesting");
       await page.getByRole("button", { name: "Continuar" }).click();
       await page.getByRole("link", { name: ".ubaetec" }).click();

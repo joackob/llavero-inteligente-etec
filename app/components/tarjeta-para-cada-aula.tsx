@@ -1,14 +1,10 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+"use client"
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";  // Asegúrate de tener tus componentes correctos
 import { MessageCircle, Key } from "lucide-react";
 import Image from "next/image";
 import { config } from "@/config";
+
 const TarjetaParaCadaEspacio = ({
   espacio,
   ocupadoPor,
@@ -20,40 +16,44 @@ const TarjetaParaCadaEspacio = ({
   ocupado: boolean;
   imageUrl: string;
 }) => {
-  const handleClick = (aula: string) => {
-    fetch(`${config.BASE_URL}/api/llaves/solicitar`, {
+  const router = useRouter(); // Inicializa el hook del router
+
+
+
+  const handleClick = async (aula: string) => {
+    console.table(config);
+    const res = await fetch(`${config.BASE_URL}/api/llaves/solicitar`, {
       method: "POST", // Cambia a POST si envías un cuerpo
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ aula }), // Envía el número de aula
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data); // Manejar la respuesta
-      })
-      .catch((error) => {
-        console.error("Error al enviar el número de aula:", error);
-      });
+    });
+
+    // Verifica el status de la respuesta
+    if (res.status === 401) {
+      // Si el status es 401 (No autorizado), redirige al inicio de sesión
+      router.push("/usuarios/iniciar-sesion-en-el-sistema"); // Redirige a la página de inicio de sesión
+    } 
   };
 
   return (
-    <Card className={`${ocupado ? "bg-gray-200" : ""}`}>
+    <div>
       <div className="relative h-40">
         <Image
           src={imageUrl}
           alt={`Imagen del aula ${espacio}`}
           className={`object-cover ${ocupado ? "filter grayscale" : ""}`}
           fill
+          priority
+          sizes="100%"
         />
       </div>
-      <CardHeader>
-        <CardTitle className="text-center text-xl">{espacio}</CardTitle>
-        <CardDescription className="text-center">
-          {ocupado ? `Ocupada por ${ocupadoPor}` : "Disponible"}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="flex row justify-stretch space-x-4">
+      <h2 className="text-center text-xl">{espacio}</h2>
+      <p className="text-center">
+        {ocupado ? `Ocupada por ${ocupadoPor}` : "Disponible"}
+      </p>
+      <div className="flex justify-stretch space-x-4">
         {ocupado ? (
           <>
             <Button className="w-full bg-gray-400">
@@ -70,9 +70,8 @@ const TarjetaParaCadaEspacio = ({
             Solicitar Llave <Key className="h-4 w-4 ml-2" />
           </Button>
         )}
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
-
 export default TarjetaParaCadaEspacio;

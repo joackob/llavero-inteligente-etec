@@ -22,6 +22,6 @@ jobs:
       - name: Install Playwright Browsers
         run: bunx playwright install --with-deps
       - name: Create a db to test
-        run: bun run init
+        run: bun run migrate:dev:db
       - name: Run Playwright tests
         run: bun run tests:e2e

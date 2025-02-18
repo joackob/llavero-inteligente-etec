@@ -1,6 +1,7 @@
 "use client";
 
 import { config } from "@/config";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 
@@ -13,13 +14,12 @@ export const useEspacios = () => {
   const obtenerInformacionSobreQuienesOcupanLosEspacios =
     async (): Promise<any> => {
       try {
-        const response = await fetch(`${config.API_URL}/espacios`);
-        const data = await response.json();
-        return data;
+        const response = await axios.get(`${config.API_URL}/espacios`);
+        return response.data;
       } catch (error) {
         console.error(
           "Error al obtener la información de los espacios: ",
-          error,
+          error
         );
         setEstado("huboUnProblema");
       }
@@ -66,7 +66,8 @@ const EsquemaParaLosEspaciosDelColegio = z.object({
           email: z.string().email(),
         })
         .optional(),
-    }),
+      urls: z.string(),
+    })
   ),
 });
 
