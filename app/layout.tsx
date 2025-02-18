@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import EncabezadoCompartidoPorTodoElSitio from "./components/encabezado-compartido-por-todo-el-sitio";
 import type { Metadata } from "next";
 import "./global.css";
+import { SearchProvider } from "./components/search-context"; // Importa el SearchProvider
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +16,10 @@ export default function RootLayout({
 }>) {
   return (
     <ContenedorBasicoParaTodoElSitio>
-      <EncabezadoCompartidoPorTodoElSitio />
-      <CuerpoPrincipalDelSitio>{children}</CuerpoPrincipalDelSitio>
+      <SearchProvider>
+        <EncabezadoCompartidoPorTodoElSitio />
+        <CuerpoPrincipalDelSitio>{children}</CuerpoPrincipalDelSitio>
+      </SearchProvider>
     </ContenedorBasicoParaTodoElSitio>
   );
 }
