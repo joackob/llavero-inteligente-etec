@@ -47,14 +47,14 @@ bool encontrarAula(String aula)
     return false;
 }
 
-void LCD::iniciarLCD();
+void LCD::iniciar()
 {
     lcd.init();
     lcd.backlight();
     lcd.print("Llavero ETEC-UBA");
 }
 
-void LCD::aulaRecibida(String aula);
+void LCD::aulaRecibida(String aula)
 {
     if (aula != "")
     {

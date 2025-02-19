@@ -11,7 +11,7 @@ private:
     /* data */
 
 public:
-    void iniciarLCD();
+    void iniciar();
     void aulaRecibida(String aula);
 
 public:

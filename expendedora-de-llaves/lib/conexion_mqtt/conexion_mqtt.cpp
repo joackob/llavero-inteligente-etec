@@ -39,7 +39,7 @@ ConexionMQTT &ConexionMQTT::intentarConectarseAlBroker() {
 bool mensajeEsValido(char *t, uint8_t *m, unsigned int lm) {
   unsigned int lt = strlen(t);
   return lm < MQTT_MAX_MSG_SIZE && lt < MQTT_MAX_MSG_SIZE && t != nullptr &&
-         m != nullptr
+         m != nullptr;
 }
 
 void establecerTopicSiElMensajeEsValido(char *t, uint8_t *m, unsigned int lm,

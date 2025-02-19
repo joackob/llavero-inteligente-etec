@@ -6,7 +6,8 @@
 
 class lector_RFID
 {
-    configurar();
+    public:
+        void configurar();
 };
 
 #endif
