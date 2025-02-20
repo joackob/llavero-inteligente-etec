@@ -34,7 +34,7 @@ export default function Page() {
               espacio={aula.espacio}
               ocupado={aula.ocupado}
               ocupadoPor={`${aula.ocupante?.nombre} ${aula.ocupante?.apellido}`}
-              imageUrl={"https://picsum.photos/200/300"}
+              imageUrl={aula.urls || "/imagenes/default.jpg"} // Usa aula.urls o una imagen por defecto
             />
           ))}
       </TableroDeTarjetasParaAulas>
