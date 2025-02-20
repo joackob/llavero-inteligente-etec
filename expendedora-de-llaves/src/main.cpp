@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include <LiquidCrystal_I2C.h>
 
 #include "conexion_mqtt.h"
 #include "conexion_wifi.h"
@@ -6,6 +7,7 @@
 #include "logger.h"
 #include "motor_del_plato_principal.h"
 #include "lector_RFID.h"
+#include "lcd.h"
 #define MODO "testing"
 
 ConexionMQTT conexion_mqtt;
@@ -14,6 +16,7 @@ IndicadorLed indicador_led;
 Logger logger;
 MotorDelPlatoPrincipal motor;
 lector_RFID lector_rfid;
+LCD Lcd;
 
 void informarAlUsuarioLaRecepcionDeUnMensajePorMQTT(MensajeMQTT mensaje);
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
@@ -21,9 +24,9 @@ void informarAlUsuarioElEstadoDeLaConexionWiFi(
 void informarAlUsuarioElEstadoDeLaConexionAlBroker(
     InformacionSobreElEstadoDeLaConexionMQTT);
 
-void setup()
+void configuracionParaNormalFuncionamiento()
 {
-
+  
   logger.configurar();
   indicador_led.configurar();
   conexion_wifi.alIntentarConectarse(informarAlUsuarioElEstadoDeLaConexionWiFi)
@@ -35,15 +38,41 @@ void setup()
       .alRecibirUnMensaje(informarAlUsuarioLaRecepcionDeUnMensajePorMQTT)
       .enlazarConConexionWiFi(conexion_wifi)
       .configurar();
+}
 
+void ejecucionParaElNormalFuncionamiento()
+{
+  conexion_mqtt.intentarConectarseAlBroker();
+}
+void configuracionParaElModoTesting()
+{
+  motor.prueba_motor();
+}
+void ejercionParaElModoTesting()
+{
   motor.configurarMotorAzul();
   motor.configurarMotorVerde();
   motor.configurarMotorNaranja();
 
+}
+    void setup()
+{
+  Serial.begin(115200);
+  Serial.println(F("Llavero ETEC-UBA"));
+
+  Lcd.iniciar();
+  motor.configurarMotorAzul();
+  motor.configurarMotorVerde();
+  motor.configurarMotorNaranja();
+  
+
   lector_rfid.configurar();
 }
 
-void loop() { conexion_mqtt.intentarConectarseAlBroker(); }
+void loop()
+{
+  
+}
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
     InformacionSobreElEstadoDeLaConexionWiFi info)

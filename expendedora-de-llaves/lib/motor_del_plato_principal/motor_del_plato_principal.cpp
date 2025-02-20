@@ -3,6 +3,7 @@
 
 void MotorDelPlatoPrincipal::girar()
 {
+    Serial.println("girando");
     analogWrite(PIN_MOTOR_VERDE, VELOCIDAD_RECOMENDADA);
     digitalWrite(PIN_MOTOR_NARANJA, LOW);
     digitalWrite(PIN_MOTOR_AZUL, HIGH);

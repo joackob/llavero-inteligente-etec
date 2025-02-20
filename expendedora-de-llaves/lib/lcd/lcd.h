@@ -1,20 +1,21 @@
+
+#ifndef LCD_H
+#define LCD_H
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <motor_del_plato_principal.h>
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+extern LiquidCrystal_I2C lcd;
 
 class LCD
 {
-private:
-    /* data */
 
 public:
     void iniciar();
     void aulaRecibida(String aula);
 
-public:
-    LCD();
-    LCD();
 };
+#endif

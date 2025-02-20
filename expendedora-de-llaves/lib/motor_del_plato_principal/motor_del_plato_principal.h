@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+
 #define PIN_MOTOR_AZUL 25
 #define PIN_MOTOR_VERDE 33
 #define PIN_MOTOR_NARANJA 26
@@ -24,6 +25,16 @@ public:
     void girar();
     void girarEnReversa();
     void detener();
+
+    void prueba_motor()
+    {
+        girar();
+        delay(1000);
+        girarEnReversa();
+        delay(1000);
+        detener();
+        delay(1000);
+    }
 };
 
 #endif
