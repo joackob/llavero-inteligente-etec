@@ -38,6 +38,10 @@ void configuracionParaNormalFuncionamiento()
       .alRecibirUnMensaje(informarAlUsuarioLaRecepcionDeUnMensajePorMQTT)
       .enlazarConConexionWiFi(conexion_wifi)
       .configurar();
+  lector_rfid.configurar();
+  lector_rfid.iniciar();
+  Lcd.iniciar();
+
 }
 
 void ejecucionParaElNormalFuncionamiento()
@@ -71,7 +75,7 @@ void ejercionParaElModoTesting()
 
 void loop()
 {
-  
+  //Lcd.aulaRecibida();
 }
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
