@@ -15,6 +15,6 @@ class LCD
 public:
     void iniciar();
     void aulaRecibida(String aula);
-
+    void retirarLlave(aula);
 };
 #endif

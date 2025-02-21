@@ -8,6 +8,7 @@
 #include "motor_del_plato_principal.h"
 #include "lector_RFID.h"
 #include "lcd.h"
+#include "pruebas.h"
 #define MODO "testing"
 
 ConexionMQTT conexion_mqtt;
@@ -18,15 +19,19 @@ MotorDelPlatoPrincipal motor;
 lector_RFID lector_rfid;
 LCD Lcd;
 
+
+
+
 void informarAlUsuarioLaRecepcionDeUnMensajePorMQTT(MensajeMQTT mensaje);
 void informarAlUsuarioElEstadoDeLaConexionWiFi(
     InformacionSobreElEstadoDeLaConexionWiFi);
 void informarAlUsuarioElEstadoDeLaConexionAlBroker(
     InformacionSobreElEstadoDeLaConexionMQTT);
-
-void configuracionParaNormalFuncionamiento()
+    
+    void setup()
 {
-  
+  Serial.begin(115200);
+  Serial.println(F("Llavero ETEC-UBA"));
   logger.configurar();
   indicador_led.configurar();
   conexion_wifi.alIntentarConectarse(informarAlUsuarioElEstadoDeLaConexionWiFi)
@@ -41,41 +46,14 @@ void configuracionParaNormalFuncionamiento()
   lector_rfid.configurar();
   lector_rfid.iniciar();
   Lcd.iniciar();
-
-}
-
-void ejecucionParaElNormalFuncionamiento()
-{
-  conexion_mqtt.intentarConectarseAlBroker();
-}
-void configuracionParaElModoTesting()
-{
-  motor.prueba_motor();
-}
-void ejercionParaElModoTesting()
-{
   motor.configurarMotorAzul();
   motor.configurarMotorVerde();
   motor.configurarMotorNaranja();
-
-}
-    void setup()
-{
-  Serial.begin(115200);
-  Serial.println(F("Llavero ETEC-UBA"));
-
-  Lcd.iniciar();
-  motor.configurarMotorAzul();
-  motor.configurarMotorVerde();
-  motor.configurarMotorNaranja();
-  
-
-  lector_rfid.configurar();
 }
 
 void loop()
 {
-  //Lcd.aulaRecibida();
+  conexion_mqtt.intentarConectarseAlBroker();
 }
 
 void informarAlUsuarioElEstadoDeLaConexionWiFi(

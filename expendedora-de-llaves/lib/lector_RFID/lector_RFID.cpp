@@ -2,8 +2,15 @@
 #include <MFRC522.h>
 #include <Arduino.h>
 #include <motor_del_plato_principal.h>
+#include <SPI.h>
 
-MotorDelPlatoPrincipal motor;
+extern MotorDelPlatoPrincipal motor;
+
+byte nuidPICC[4] = { 0, 0, 0, 0 };  // Array para almacenar el UID de la tarjeta RFID
+MFRC522::MIFARE_Key key;             // Variable para la clave MIFARE
+MFRC522 rfid(SS_PIN, RST_PIN);       // Inicializa el lector RFID
+
+MFRC522::StatusCode status;
 
 void lector_RFID::iniciar()
 {
@@ -19,6 +26,7 @@ void lector_RFID::iniciar()
 
 bool lector_RFID::hayTagRFID() {
     if (!rfid.PICC_IsNewCardPresent()) return false;
+    Serial.println("hola");
     return rfid.PICC_ReadCardSerial();
   }
   
@@ -32,11 +40,12 @@ bool lector_RFID::encontrarAula(String aula)
     int contadorVueltas = 0;
   
     while (true) {
+      Serial.println("buscando: ");
       while (!hayTagRFID());  // Esperar hasta que se detecte un RFID
   
-      byte datosLeidos[RFID_BUFFER_SIZE];
+      byte datosLeidos[TAMANO_BUFFER_RFID];
       leerDatosDeBloque(NUMERO_DE_BLOQUE_RFID, datosLeidos);  // Leer datos del RFID
-      cerrarComunicacionRFID();
+//      cerrarComunicacionRFID(); //no le veo utilidad
   
       String datosLeidosString = String((char*)datosLeidos);
       String datosRecortados = datosLeidosString.substring(0, 8);
@@ -58,8 +67,8 @@ bool lector_RFID::encontrarAula(String aula)
 
 void lector_RFID::leerDatosDeBloque(int bloque, byte datos[]) 
 {
-    byte bufferLen = RFID_BUFFER_SIZE;
-    status = rfid.PCD_Authenticate(MFRC522::PICC_AUTHENT1A, bloque, &key, &nuidPICC[0]);
+    byte bufferLen = TAMANO_BUFFER_RFID;
+    status = rfid.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, bloque, &key, &rfid.uid);
   
     if (status != MFRC522::STATUS_OK) {
       Serial.print(F("Error de autenticación: "));
@@ -80,4 +89,10 @@ void lector_RFID::configurar()
     byte nuidPICC[4] = {0, 0, 0, 0};
     MFRC522::MIFARE_Key key;
     MFRC522 rfid(SS_PIN, RST_PIN);
+}
+void lector_RFID::esperarRetiroDeLlave() {
+  if (rfid.PICC_IsNewCardPresent()) {
+    rfid.PICC_ReadCardSerial();
+    Serial.println("Llave retirada");
+  }
 }

@@ -11,14 +11,8 @@
 #define TAMANO_BUFFER_RFID 18      // Tamaño del buffer de lectura (16 bytes + 2 bytes extra)
 
 
+
 // Variables globales
-byte nuidPICC[4] = { 0, 0, 0, 0 };  // Array para almacenar el UID de la tarjeta RFID
-MFRC522::MIFARE_Key key;             // Variable para la clave MIFARE
-MFRC522 rfid(SS_PIN, RST_PIN);       // Inicializa el lector RFID
-
-MFRC522::StatusCode status;
-
-
 
 class lector_RFID
 {
@@ -27,7 +21,9 @@ class lector_RFID
         void configurar();
         bool encontrarAula(String aula);
         bool hayTagRFID();
-        void leerDatorDeBloque(int bloque, byte datos[]);
+        void leerDatosDeBloque(int bloque, byte datos[]);
+        void esperarRetiroDeLlave();
+
 };
 
 #endif

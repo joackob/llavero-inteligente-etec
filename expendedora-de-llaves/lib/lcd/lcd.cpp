@@ -5,6 +5,7 @@
 #include <lcd.h>
 #include <LiquidCrystal_I2C.h>
 #include <motor_del_plato_principal.h>
+#include <lector_RFID.h>
 
 
 
@@ -25,4 +26,17 @@ void LCD::aulaRecibida(String aula)
         lcd.print("Recibí: ");
         lcd.print(aula);
     }
+    
+}
+
+void LCD::retirarLlave(aula)
+{
+    if (encontrarAula(aula)) {  // Si se encuentra el aula en el RFID
+        lcd.setCursor(0, 1);
+        lcd.print("Llave servida");
+        delay(200);
+  
+        while (rfid.PICC_IsNewCardPresent()) {  // Espera a que el usuario retire la llave
+          esperarRetiroDeLlave();
+        }
 }

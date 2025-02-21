@@ -26,15 +26,7 @@ public:
     void girarEnReversa();
     void detener();
 
-    void prueba_motor()
-    {
-        girar();
-        delay(1000);
-        girarEnReversa();
-        delay(1000);
-        detener();
-        delay(1000);
-    }
+
 };
 
 #endif
