@@ -37,6 +37,8 @@ Para ejecutar el servidor de desarrollo, correr el siguiente comando
 bun run dev
 ```
 
+*Recordar configurar el puerto 3000, tanto en el .env, como en el config.ts
+
 ### Ejecución de pruebas
 
 Para ejecutar los pruebas unitarias, correr el siguiente comando
@@ -67,3 +69,4 @@ Es posible crear nuevos escenarios para pruebas, con el servidor de desarrollo e
 bun run create:test:e2e
 ```
 
+#

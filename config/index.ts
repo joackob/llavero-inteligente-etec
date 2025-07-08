@@ -34,8 +34,8 @@ const obtenerConfiguracionATravesDeLosParametros = () => {
     console.error(process.env)
     console.error(mensaje);
     return {
-      API_URL: "http://localhost:3001/api",
-      BASE_URL: "http://localhost:3001",
+      API_URL: "http://localhost:3000/api",
+      BASE_URL: "http://localhost:3000",
       MQTT_URL: "mqtt://localhost",
       DATABASE_URL: "file:test.db",
       JWT_SECRET: "jwt_secret",
