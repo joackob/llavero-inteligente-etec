@@ -69,4 +69,15 @@ Es posible crear nuevos escenarios para pruebas, con el servidor de desarrollo e
 bun run create:test:e2e
 ```
 
-#
+### CONFIGURACION DE MQTT
+
+Por el problema comun en el colegio el cual consta de no poder llegar haciendo ping desde una computadora a otra, tenemos que utilizar un broker publico.
+
+Este fue configurado en el archivo 
+./config/index.ts
+Exactamente el MQTT_URL.
+
+Despues debido a un problema con la escritura inicial del topic con el guion medio/bajo, hubo que realizar configuraciones en 
+/app/api/llaves/solicitar/socket/index.ts
+
+Un error muy comun al solicitar una llave, es el hecho de que en la base de datos ya esta ocupada, y al pedir denuevo en la pagina, no aparece como que ya esta solicitada, sino que la pagina no se actualizo sola. Para solucionarlo, hay que entrar a la base de datos y modificar el estado del campo ocupado
