@@ -36,7 +36,7 @@ const obtenerConfiguracionATravesDeLosParametros = () => {
     return {
       API_URL: "http://localhost:3000/api",
       BASE_URL: "http://localhost:3000",
-      MQTT_URL: "mqtt://broker.hivemq.com",
+      MQTT_URL: "mqtt://test.mosquitto.org",
       DATABASE_URL: "file:test.db",
       JWT_SECRET: "jwt_secret",
       NODE_ENV: "DEV",
