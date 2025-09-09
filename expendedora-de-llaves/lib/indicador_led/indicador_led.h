@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 
+//Indicaciones de pines
 #define PIN_DEL_INDICADOR_LED 2
 #define DELAY_DEL_INDICADOR_AL_PARPADEAR 100
 
@@ -11,6 +12,7 @@ class IndicadorLed {
   IndicadorLed() {};
   ~IndicadorLed() {};
 
+  //Controla el led mediante los pines
  public:
   void configurar() { pinMode(PIN_DEL_INDICADOR_LED, OUTPUT); };
   void prender() { digitalWrite(PIN_DEL_INDICADOR_LED, HIGH); };

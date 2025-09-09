@@ -12,7 +12,7 @@
 
 
 
-// Variables globales
+// Crea el objeto de LectorRFID y define variables globales
 
 class lector_RFID
 {

@@ -44,3 +44,17 @@ libraries scanning project source files.
 
 More information about PlatformIO Library Dependency Finder
 - https://docs.platformio.org/page/librarymanager/ldf.html
+
+
+Por cuestiones de seguridad y del lenguaje en los archivos que terminan archivo.h se definen las funciones, en los archivo.cpp se define como funciona determinada funcion 
+
+Al crear un objeto, se necesita crear un constructor (el que crea el objeto): Por ejemplo si el objeto
+se llama Objeto , el constructor tiene el mismo nombre de la clase: Objeto() {}; y el destructor es
+igual al constructor pero con  ~Objeto() {};
+
+Public significa que se puede acceder a esa propiedad del objeto desde cualquier otro lado de la aplicacion, por ejemplo un constructor va a tener que ir si o si en public para crear
+
+Falta seguir comentando funcionalidades
+
+Y hacer un codigo principal 
+

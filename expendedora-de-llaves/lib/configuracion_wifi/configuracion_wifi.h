@@ -1,7 +1,8 @@
 #ifndef CONFIGURACION_WIFI_H
 #define CONFIGURACION_WIFI_H
 
-#define WIFI_SSID "Telecentro-2a38"
-#define WIFI_PASS "CJNYUGZZKTNZ"
+//Define las configuraciones de la conexion a wifi 
+#define WIFI_SSID "ETEC-UBA"
+#define WIFI_PASS "ETEC-alumnos@UBA"
 
 #endif

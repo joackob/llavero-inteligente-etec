@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-
+//define los pines del Motor
 #define PIN_MOTOR_AZUL 25
 #define PIN_MOTOR_VERDE 33
 #define PIN_MOTOR_NARANJA 26
@@ -13,7 +13,7 @@
 class MotorDelPlatoPrincipal
 {
 private:
-    /* data */
+    /* data */ //yo supongo que aca se tendra que insertar data pero no se que?
 public:
     MotorDelPlatoPrincipal() {};
     ~MotorDelPlatoPrincipal() {};
@@ -21,7 +21,7 @@ public:
 public:
     void configurarMotorAzul() {pinMode(PIN_MOTOR_AZUL, OUTPUT); };
     void configurarMotorVerde() {pinMode(PIN_MOTOR_VERDE, OUTPUT); };
-    void configurarMotorNaranja() {pinMode(PIN_MOTOR_NARANJA, OUTPUT); };   //inline definition
+    void configurarMotorNaranja() {pinMode(PIN_MOTOR_NARANJA, OUTPUT); }; 
     void girar();
     void girarEnReversa();
     void detener();
